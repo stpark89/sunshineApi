@@ -17,8 +17,6 @@ public class DataController {
 
     @Autowired
     private DataService dataService;
-
-
     /**
      * Smp Data 조회
      * @return
