@@ -27,4 +27,14 @@ public class DataController {
         return dataService.selectSmpData();
     }
 
+    /**
+     * Smp Data 조회
+     * @return
+     */
+    @RequestMapping(value="/selectRecData")
+    public Map<String,Object> selectRecData(){
+        log.info("Select Rec Data");
+        return dataService.selectRecData();
+    }
+    
 }
