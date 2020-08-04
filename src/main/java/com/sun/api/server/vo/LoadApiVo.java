@@ -15,4 +15,6 @@ public class LoadApiVo {
 
     private String resultType;
 
+    private String confmKey;
+
 }
