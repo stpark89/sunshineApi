@@ -230,6 +230,9 @@ public class DataController {
 
     @RequestMapping(value="/bsdPrice")
     public void bsdPrice(@RequestBody BsdPriceRequestVo requestVo, HttpServletResponse response) throws Exception{
+
+        log.info("bsdPrice >>>!!!!!!!!!!!!!!!!!!!!");
+
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1611000/nsdi/StatsIndicatorService/attr/getIndvdLandPrice"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=%2B5vcuNVXk3gsadPH5UG5IalKrqI6jb1PL68PlxHf6R36phxavyKGAIuKJ9yVqoLOcCPptwroicpU9jxyISW5FA%3D%3D"); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("stdrYear","UTF-8") + "=" + URLEncoder.encode(requestVo.getStdrYear(), "UTF-8")); /*기준년도(YYYY: 4자리)*/
