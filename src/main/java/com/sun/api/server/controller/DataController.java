@@ -1,9 +1,6 @@
 package com.sun.api.server.controller;
 
-import com.sun.api.server.vo.LadfrlRequestVo;
-import com.sun.api.server.vo.LadfrlResponseVo;
-import com.sun.api.server.vo.LoadApiVo;
-import com.sun.api.server.vo.LocationApiVo;
+import com.sun.api.server.vo.*;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -228,6 +225,41 @@ public class DataController {
         rd.close();
         conn.disconnect();
         return responseVo;
+    }
+
+
+    @RequestMapping(value="/bsdPrice")
+    public void bsdPrice(@RequestBody BsdPriceRequestVo requestVo, HttpServletResponse response) throws Exception{
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1611000/nsdi/StatsIndicatorService/attr/getIndvdLandPrice"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=%2B5vcuNVXk3gsadPH5UG5IalKrqI6jb1PL68PlxHf6R36phxavyKGAIuKJ9yVqoLOcCPptwroicpU9jxyISW5FA%3D%3D"); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("stdrYear","UTF-8") + "=" + URLEncoder.encode(requestVo.getStdrYear(), "UTF-8")); /*기준년도(YYYY: 4자리)*/
+        urlBuilder.append("&" + URLEncoder.encode("reqLvl","UTF-8") + "=" + URLEncoder.encode(requestVo.getReqLvl(), "UTF-8")); /*요청구분(1: 시도단위, 2: 시군구단위, 3: 읍면동리단위)*/
+        urlBuilder.append("&" + URLEncoder.encode("ldCode","UTF-8") + "=" + URLEncoder.encode(requestVo.getLdCode(), "UTF-8")); /*법정동코드(reqLvl값이 1일 경우: 해당 없음, 2일 경우: 2~5자리, 3일 경우: 2~10자리)*/
+        urlBuilder.append("&" + URLEncoder.encode("format","UTF-8") + "=" + URLEncoder.encode(requestVo.getFormat(), "UTF-8")); /*응답결과 형식(xml 또는 json)*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode(String.valueOf(requestVo.getNumOfRows()), "UTF-8")); /*검색건수*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(String.valueOf(requestVo.getPageNo()), "UTF-8")); /*페이지 번호*/
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        System.out.println(sb.toString());
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/xml");
+        response.getWriter().write(sb.toString());			// 응답결과 반환
     }
 
 }
