@@ -1,7 +1,12 @@
 package com.sun.api.server.controller;
 
 import com.sun.api.server.vo.*;
+import com.sun.api.server.vo.fs.ConvertXYmapVo;
 import lombok.extern.java.Log;
+import org.osgeo.proj4j.BasicCoordinateTransform;
+import org.osgeo.proj4j.CRSFactory;
+import org.osgeo.proj4j.CoordinateReferenceSystem;
+import org.osgeo.proj4j.ProjCoordinate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,7 +27,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Map;
 import java.net.HttpURLConnection;
 import javax.xml.xpath.*;
@@ -129,7 +136,7 @@ public class DataController {
     @RequestMapping(value="/ladfrlList")
     public LadfrlResponseVo ladfrlList(@RequestBody LadfrlRequestVo ladfrlRequestVo, HttpServletResponse response) throws IOException, ParserConfigurationException, SAXException, XPathExpressionException {
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1611000/nsdi/eios/LadfrlService/ladfrlList.xml"); /*URL*/
-        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=%2B5vcuNVXk3gsadPH5UG5IalKrqI6jb1PL68PlxHf6R36phxavyKGAIuKJ9yVqoLOcCPptwroicpU9jxyISW5FA%3D%3D"); /*Service Key*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=Fme5h1A7V%2FpidUohmsSaThadKOjWD1uzoovGYVhGtOhwcs5pIMxrOVHuHnBpH0FLspGWQorec8u7o6xAnUaXLQ%3D%3D"); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("pnu","UTF-8") + "=" + URLEncoder.encode(ladfrlRequestVo.getPnu(), "UTF-8")); /*각 필지를 서로 구별하기 위하여 필지마다 붙이는 고유한 번호*/
         urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*검색건수*/
         urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지 번호*/
@@ -227,14 +234,19 @@ public class DataController {
         return responseVo;
     }
 
-
-    @RequestMapping(value="/bsdPrice")
+    /**
+     * 토지 상세 정보 .
+     * @param requestVo
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping(value="/fetchBsdPrice")
     public void bsdPrice(@RequestBody BsdPriceRequestVo requestVo, HttpServletResponse response) throws Exception{
 
         log.info("bsdPrice >>>!!!!!!!!!!!!!!!!!!!!");
 
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1611000/nsdi/StatsIndicatorService/attr/getIndvdLandPrice"); /*URL*/
-        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=%2B5vcuNVXk3gsadPH5UG5IalKrqI6jb1PL68PlxHf6R36phxavyKGAIuKJ9yVqoLOcCPptwroicpU9jxyISW5FA%3D%3D"); /*Service Key*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=Fme5h1A7V%2FpidUohmsSaThadKOjWD1uzoovGYVhGtOhwcs5pIMxrOVHuHnBpH0FLspGWQorec8u7o6xAnUaXLQ%3D%3D"); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("stdrYear","UTF-8") + "=" + URLEncoder.encode(requestVo.getStdrYear(), "UTF-8")); /*기준년도(YYYY: 4자리)*/
         urlBuilder.append("&" + URLEncoder.encode("reqLvl","UTF-8") + "=" + URLEncoder.encode(requestVo.getReqLvl(), "UTF-8")); /*요청구분(1: 시도단위, 2: 시군구단위, 3: 읍면동리단위)*/
         urlBuilder.append("&" + URLEncoder.encode("ldCode","UTF-8") + "=" + URLEncoder.encode(requestVo.getLdCode(), "UTF-8")); /*법정동코드(reqLvl값이 1일 경우: 해당 없음, 2일 경우: 2~5자리, 3일 경우: 2~10자리)*/
@@ -263,6 +275,83 @@ public class DataController {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/xml");
         response.getWriter().write(sb.toString());			// 응답결과 반환
+    }
+
+    @RequestMapping(value="/convertXY")
+    public ConvertXYmapVo convertXY (@RequestBody Map<String, String> paramData) {
+        log.info("행안부 좌표 x, y -> KaKaoMap 용 좌표 converting >>>");
+        log.info(paramData.toString());
+        log.info(paramData.get("xPoint"));
+        log.info(paramData.get("yPoint"));
+
+        ConvertXYmapVo returnVo = new ConvertXYmapVo();
+
+        double x = Double.parseDouble(paramData.get("xpoint"));//x좌표
+        double y = Double.parseDouble(paramData.get("ypoint"));//y좌표
+
+        CRSFactory factory = new CRSFactory();
+        CoordinateReferenceSystem srcCrs = factory.createFromName("EPSG:5179");//현재 좌표
+        CoordinateReferenceSystem dstCrs = factory.createFromName("EPSG:4326");//변경할 좌표
+
+        BasicCoordinateTransform transform = new BasicCoordinateTransform(srcCrs, dstCrs);
+
+        ProjCoordinate srcCoord = new ProjCoordinate(x, y);
+        ProjCoordinate dstCoord = new ProjCoordinate();
+
+        transform.transform(srcCoord, dstCoord);//좌표변환
+        System.out.println(dstCoord.x + "," + dstCoord.y);//변환된 좌표
+
+        returnVo.setXPoint(String.valueOf(dstCoord.y));
+        returnVo.setYPoint(String.valueOf(dstCoord.x));
+
+        return returnVo;
+    }
+
+
+    /**
+     * 발전량
+     * @throws Exception
+     */
+    @RequestMapping(value="/testDisPowerConfig")
+    public void testDisPowerConfig() throws Exception{
+
+        String ServiceKey = "Fme5h1A7V%2FpidUohmsSaThadKOjWD1uzoovGYVhGtOhwcs5pIMxrOVHuHnBpH0FLspGWQorec8u7o6xAnUaXLQ%3D%3D";
+       //  URLDecoder.decode(ServiceKey, "UTF-8");
+
+        log.info(ServiceKey);
+        log.info(URLEncoder.encode(ServiceKey, "UTF-8"));
+
+        log.info("test ----");
+        StringBuilder urlBuilder = new StringBuilder("http://openapi.kepco.co.kr/service/dispersedGenerationService/getDispersedGerSearch"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" +URLEncoder.encode(ServiceKey, "UTF-8")); /*Service Key*/
+         urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("&" + URLEncoder.encode("addrDo","UTF-8") + "=" + URLEncoder.encode("전라남도", "UTF-8")); /*시/도*/
+        urlBuilder.append("&" + URLEncoder.encode("addrSi","UTF-8") + "=" + URLEncoder.encode("나주시", "UTF-8")); /*시*/
+        urlBuilder.append("&" + URLEncoder.encode("addrGu","UTF-8") + "=" + URLEncoder.encode("서구", "UTF-8")); /*구/군*/
+        urlBuilder.append("&" + URLEncoder.encode("addrLidong","UTF-8") + "=" + URLEncoder.encode("경현동", "UTF-8")); /*동/면*/
+        urlBuilder.append("&" + URLEncoder.encode("AddrLi","UTF-8") + "=" + URLEncoder.encode("석전리", "UTF-8")); /*리*/
+        urlBuilder.append("&" + URLEncoder.encode("addrJibun","UTF-8") + "=" + URLEncoder.encode("337-4", "UTF-8")); /*상세번지*/
+        urlBuilder.append("&" + URLEncoder.encode("substCd","UTF-8") + "=" + URLEncoder.encode("5063", "UTF-8")); /*변전소코드*/
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        System.out.println(sb.toString());
     }
 
 }
