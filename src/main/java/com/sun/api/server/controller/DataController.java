@@ -1,6 +1,8 @@
 package com.sun.api.server.controller;
 
 import com.sun.api.server.vo.*;
+import com.sun.api.server.vo.fs.BuildingDetailRequestVo;
+import com.sun.api.server.vo.fs.BuildingDetailResponseVo;
 import com.sun.api.server.vo.fs.ConvertXYmapVo;
 import lombok.extern.java.Log;
 import org.osgeo.proj4j.BasicCoordinateTransform;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.sun.api.server.service.DataService;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -354,4 +357,103 @@ public class DataController {
         System.out.println(sb.toString());
     }
 
+    /**
+     * 건축물 대장 서비스 .
+     * @param requestVo
+     * @throws Exception
+     */
+    @RequestMapping(value="/fetchBuildingDetailInfo")
+    public BuildingDetailResponseVo fetchBuildingDetailInfo(@RequestBody BuildingDetailRequestVo requestVo, HttpServletResponse response) throws Exception{
+        log.info("건축물대장 정보 서비스 ");
+        log.info(requestVo.toString());
+
+        BuildingDetailResponseVo returnVo = new BuildingDetailResponseVo();
+
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1611000/BldRgstService/getBrRecapTitleInfo"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=Fme5h1A7V%2FpidUohmsSaThadKOjWD1uzoovGYVhGtOhwcs5pIMxrOVHuHnBpH0FLspGWQorec8u7o6xAnUaXLQ%3D%3D"); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("sigunguCd","UTF-8") + "=" + URLEncoder.encode(requestVo.getSigunguCd(), "UTF-8")); /*행정표준코드*/
+        urlBuilder.append("&" + URLEncoder.encode("bjdongCd","UTF-8") + "=" + URLEncoder.encode(requestVo.getBjdongCd(), "UTF-8")); /*행정표준코드*/
+        urlBuilder.append("&" + URLEncoder.encode("platGbCd","UTF-8") + "=" + URLEncoder.encode(requestVo.getPlatGbCd(), "UTF-8")); /*0:대지 1:산 2:블록*/
+        urlBuilder.append("&" + URLEncoder.encode("bun","UTF-8") + "=" + URLEncoder.encode(requestVo.getBun(), "UTF-8")); /*번*/
+        urlBuilder.append("&" + URLEncoder.encode("ji","UTF-8") + "=" + URLEncoder.encode(requestVo.getJi(), "UTF-8")); /*지*/
+   
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line + "\n");
+        }
+
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
+        DocumentBuilder builder;
+        Document doc = null;
+        // xml 파싱하기
+        InputSource is = new InputSource(new StringReader(sb.toString()));
+        builder = factory.newDocumentBuilder();
+        doc = builder.parse(is);
+        XPathFactory xpathFactory = XPathFactory.newInstance();
+        XPath xpath = xpathFactory.newXPath();
+
+        XPathExpression expr = xpath.compile("//response/body/items/item");
+        NodeList nodeList = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+
+
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            NodeList child = nodeList.item(i).getChildNodes();
+
+            for (int j = 0; j < child.getLength(); j++) {
+                log.info("여기 두번째 포문 들어오나 ================");
+                Node node = child.item(j);
+
+                log.info("먼데 이거 --------------------???");
+                System.out.println(node.getNodeName());
+                System.out.println(node.getTextContent());
+                System.out.println(node.getNodeType());
+                log.info("먼데 이거 --------------------???");
+
+                if(node.getNodeType() == Node.ELEMENT_NODE){
+                    // 법정 동명
+                    if(node.getNodeName().equals("archArea")){
+                        log.info("archArea 일떄 ?? " +node.getTextContent());
+                        returnVo.setArchArea(Double.parseDouble(node.getTextContent()));
+                    }
+
+                    if(node.getNodeName().equals("bcRat")){
+                        log.info("bcRat 일떄 ?? " +node.getTextContent());
+                        returnVo.setBcRat(Double.parseDouble(node.getTextContent()));
+                    }
+
+                    if(node.getNodeName().equals("totArea")){
+                        log.info("totArea 일떄 ?? " +node.getTextContent());
+                        returnVo.setTotArea(Double.parseDouble(node.getTextContent()));
+                    }
+
+                    if(node.getNodeName().equals("vlRat")){
+                        log.info("vlRat 일떄 ?? " +node.getTextContent());
+                        returnVo.setVlRat(Double.parseDouble(node.getTextContent()));
+                    }
+
+                    if(node.getNodeName().equals("etcPurps")){
+                        returnVo.setEtcPurps(node.getTextContent());
+                    }
+                }	// for end
+            }
+        }
+
+        log.info("최종 결과 확인 ----->>");
+        log.info(returnVo.toString());
+
+        return returnVo;
+    }
 }
