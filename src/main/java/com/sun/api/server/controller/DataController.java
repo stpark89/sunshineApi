@@ -1,9 +1,7 @@
 package com.sun.api.server.controller;
 
 import com.sun.api.server.vo.*;
-import com.sun.api.server.vo.fs.BuildingDetailRequestVo;
-import com.sun.api.server.vo.fs.BuildingDetailResponseVo;
-import com.sun.api.server.vo.fs.ConvertXYmapVo;
+import com.sun.api.server.vo.fs.*;
 import lombok.extern.java.Log;
 import org.osgeo.proj4j.BasicCoordinateTransform;
 import org.osgeo.proj4j.CRSFactory;
@@ -32,7 +30,9 @@ import java.io.*;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.net.HttpURLConnection;
 import javax.xml.xpath.*;
@@ -416,11 +416,6 @@ public class DataController {
                 log.info("여기 두번째 포문 들어오나 ================");
                 Node node = child.item(j);
 
-                log.info("먼데 이거 --------------------???");
-                System.out.println(node.getNodeName());
-                System.out.println(node.getTextContent());
-                System.out.println(node.getNodeType());
-                log.info("먼데 이거 --------------------???");
 
                 if(node.getNodeType() == Node.ELEMENT_NODE){
                     // 법정 동명
@@ -454,6 +449,117 @@ public class DataController {
         log.info("최종 결과 확인 ----->>");
         log.info(returnVo.toString());
 
+        rd.close();
+        conn.disconnect();
         return returnVo;
     }
+
+    /**
+     * 한국전력공사 분산전원 연계정보
+     * @param requestVo
+     * @throws Exception
+     */
+    @RequestMapping(value="/fetchFsStrategicInformation")
+    public List<StrategicInformationResponseVo> fetchFsStrategicInformation(@RequestBody StrategicInformationRequestVo requestVo) throws Exception{
+        log.info("fetchFsStrategicInformation");
+
+        List<StrategicInformationResponseVo> returnData = new ArrayList<StrategicInformationResponseVo>();
+
+        StringBuilder urlBuilder = new StringBuilder("http://openapi.kepco.co.kr/service/dispersedGenerationService/getDispersedGerSearch"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=Fme5h1A7V%2FpidUohmsSaThadKOjWD1uzoovGYVhGtOhwcs5pIMxrOVHuHnBpH0FLspGWQorec8u7o6xAnUaXLQ%3D%3D"); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(String.valueOf(requestVo.getPageNo()), "UTF-8")); /*페이지번호*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode(String.valueOf(requestVo.getNumOfRows()), "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("&" + URLEncoder.encode("addrDo","UTF-8") + "=" + URLEncoder.encode(requestVo.getAddrDo(), "UTF-8")); /*시/도*/
+        urlBuilder.append("&" + URLEncoder.encode("addrSi","UTF-8") + "=" + URLEncoder.encode(requestVo.getAddrSi(), "UTF-8")); /*시*/
+        urlBuilder.append("&" + URLEncoder.encode("addrGu","UTF-8") + "=" + URLEncoder.encode(requestVo.getAddrGu(), "UTF-8")); /*구/군*/
+        urlBuilder.append("&" + URLEncoder.encode("addrLidong","UTF-8") + "=" + URLEncoder.encode(requestVo.getAddrLidong(), "UTF-8")); /*동/면*/
+        urlBuilder.append("&" + URLEncoder.encode("AddrLi","UTF-8") + "=" + URLEncoder.encode(requestVo.getAddrLi(), "UTF-8")); /*리*/
+        urlBuilder.append("&" + URLEncoder.encode("addrJibun","UTF-8") + "=" + URLEncoder.encode(requestVo.getAddrJibun(), "UTF-8")); /*상세번지*/
+        urlBuilder.append("&" + URLEncoder.encode("substCd","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*변전소코드*/
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
+        DocumentBuilder builder;
+        Document doc = null;
+        // xml 파싱하기
+        InputSource is = new InputSource(new StringReader(sb.toString()));
+        builder = factory.newDocumentBuilder();
+        doc = builder.parse(is);
+        XPathFactory xpathFactory = XPathFactory.newInstance();
+        XPath xpath = xpathFactory.newXPath();
+
+        XPathExpression expr = xpath.compile("//response/body/items/item");
+        NodeList nodeList = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+
+        System.out.println("처음 리턴 데이터 렝스 확인중 -------");
+        System.out.println(nodeList.getLength());
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            NodeList child = nodeList.item(i).getChildNodes();
+            StrategicInformationResponseVo returnVo = new StrategicInformationResponseVo();
+            for (int j = 0; j < child.getLength(); j++) {
+                Node node = child.item(j);
+
+                System.out.println("node.getTextContent() == 약; 버ㅣ애힘/"+node.getTextContent());
+
+                if(node.getNodeType() == Node.ELEMENT_NODE) {
+                    // 발전소
+                    if (node.getNodeName().equals("substNm")) {
+                        returnVo.setSubstNm(node.getTextContent());
+                    }
+
+                    // 변전소 여유용량
+                    if (node.getNodeName().equals("vol_1")) {
+                        returnVo.setVol_1(node.getTextContent());
+                    }
+
+                    // 변전소 누적연계용량
+                    if (node.getNodeName().equals("substPwr")) {
+                        returnVo.setSubstPwr(node.getTextContent());
+                    }
+
+                    // 변압기 누적연계용량
+                    if (node.getNodeName().equals("mtrPwr")) {
+                        returnVo.setMtrPwr(node.getTextContent());
+                    }
+
+                    // Dl
+                    if (node.getNodeName().equals("dlNm")) {
+                        returnVo.setDlNm(node.getTextContent());
+                    }
+
+                    // DL누적연계용량
+                    if (node.getNodeName().equals("dlPwr")) {
+                        returnVo.setDlPwr(node.getTextContent());
+                    }
+                }
+            }
+
+            returnData.add(returnVo);
+        }
+
+        for(int i =0; i < returnData.size() ; i++){
+            System.out.println(returnData.get(i).toString());
+        }
+
+        rd.close();
+        conn.disconnect();
+        return returnData;
+    }
+
 }
