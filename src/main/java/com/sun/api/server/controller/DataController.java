@@ -38,8 +38,10 @@ import java.net.HttpURLConnection;
 import javax.xml.xpath.*;
 
 
+// @CrossOrigin(origins = {"http://116.123.117.59:18280", "http://localhost:8080", "http://localhost:3000", "http://13.124.51.180:8080" })
+
 @Log
-@CrossOrigin(origins = {"http://116.123.117.59:18280", "http://localhost:8080", "http://localhost:3000", "http://13.124.51.180:8080" })
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value="/api")
 public class DataController {
@@ -263,9 +265,9 @@ public class DataController {
         System.out.println("Response code: " + conn.getResponseCode());
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream() , "UTF-8"));
         } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
         }
         StringBuilder sb = new StringBuilder();
         String line;
@@ -343,9 +345,9 @@ public class DataController {
         System.out.println("Response code: " + conn.getResponseCode());
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
         } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
         }
         StringBuilder sb = new StringBuilder();
         String line;
@@ -384,9 +386,9 @@ public class DataController {
         System.out.println("Response code: " + conn.getResponseCode());
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
         } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
         }
         StringBuilder sb = new StringBuilder();
         String line;
