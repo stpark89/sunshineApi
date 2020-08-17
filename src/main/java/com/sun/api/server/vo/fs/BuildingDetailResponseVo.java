@@ -9,6 +9,7 @@ import lombok.Data;
  * 건폐율(%)	bcRat	NUMBER(19,9)	0	0	건폐율(%)
  * 연면적(㎡)	totArea	NUMBER(19,9)	0	223939	연면적(㎡)
  * 용적률(%)	vlRat	NUMBER(19,9)	0	0	용적률(%)
+ * 건축물명   bldNm    VARCHAR
  * 기타용도 etcPurps
  */
 @Data
@@ -21,6 +22,8 @@ public class BuildingDetailResponseVo {
     private double totArea;
 
     private double vlRat;
+
+    private String bldNm;
 
     private String etcPurps;
 }

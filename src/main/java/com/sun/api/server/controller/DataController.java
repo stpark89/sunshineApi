@@ -90,7 +90,7 @@ public class DataController {
         String confmKey = req.getParameter("confmKey");          //요청 변수 설정 (승인키)
         String keyword = req.getParameter("keyword");            //요청 변수 설정 (키워드)
 
-        log.info(("ConfmKey - " +confmKey + " // Vo :  " +loadApiVo.getConfmKey().toString()));
+        log.info(("ConfmKey - " +confmKey + " // Vo :  " +loadApiVo.toString()));
 
         // OPEN API 호출 URL 정보 설정
         String apiUrl = "http://www.juso.go.kr/addrlink/addrLinkApi.do?currentPage="+loadApiVo.getCurrentPage()+"&countPerPage="+loadApiVo.getCountPerPage()+"&keyword="+ URLEncoder.encode(loadApiVo.getKeyword(),"UTF-8")+"&confmKey="+loadApiVo.getConfmKey()+"&resultType="+loadApiVo.getResultType();
@@ -444,6 +444,12 @@ public class DataController {
                     if(node.getNodeName().equals("etcPurps")){
                         returnVo.setEtcPurps(node.getTextContent());
                     }
+
+                    // 건축물명
+                    if(node.getNodeName().equals("bldNm")){
+                        returnVo.setBldNm(node.getTextContent());
+                    }
+
                 }	// for end
             }
         }
