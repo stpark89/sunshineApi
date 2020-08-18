@@ -8,6 +8,6 @@ import com.sun.api.server.map.vo.ZoneSunshine;
 
 public interface ZoneSunshineRepository extends JpaRepository<ZoneSunshine, Long>{
 	
-    @Query(value = "SELECT * FROM zone_sunshine WHERE sggNm =:sggNm AND siNm =:siNm", nativeQuery = true)
+    @Query(value = "SELECT * FROM zone_sunshine WHERE sgg_nm =:sggNm AND si_nm =:siNm", nativeQuery = true)
 	ZoneSunshine findBySearchZoneSunshine(@Param("sggNm") String sggNm, @Param("siNm") String siNm);
 }
