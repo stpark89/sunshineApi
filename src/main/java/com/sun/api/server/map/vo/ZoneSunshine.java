@@ -71,7 +71,7 @@ public class ZoneSunshine {
     	
     }
     
-    public ZoneSunshine(String sggNm, String siNm, double january, double february, double march, double april, double may, double june, double july, double august, double september, double october, double novembe, double december, double annualAverage){
+    public ZoneSunshine(String siNm, String sggNm, double january, double february, double march, double april, double may, double june, double july, double august, double september, double october, double novembe, double december, double annualAverage){
     	this.sggNm = sggNm;
     	this.siNm = siNm;
     	this.january = january;

@@ -169,6 +169,28 @@ public class MapService {
 		ZoneSunshine zoneSunshine129 = new ZoneSunshine("전라남도","함평",2.94,3.30,5.02,5.44,5.10,4.88,4.27,3.53,4.62,3.64,1.89,1.81,3.87);
 		ZoneSunshine zoneSunshine130 = new ZoneSunshine("제주도","제주",1.32,2.81,4.48,5.72,5.32,4.62,5.71,4.55,4.63,3.70,1.99,1.24,3.84);
 		ZoneSunshine zoneSunshine131 = new ZoneSunshine("제주도","서귀포",1.32,2.80,4.45,5.74,5.32,4.61,5.68,4.55,4.65,3.69,2.00,1.25,3.84);
+		ZoneSunshine zoneSunshine132 = new ZoneSunshine("경기도","김포",2.75,3.04,4.55,4.67,4.85,4.55,3.12,3.41,4.20,3.22,1.80,1.94,3.51);
+		ZoneSunshine zoneSunshine133 = new ZoneSunshine("경기도","고양",2.75,3.04,4.55,4.67,4.85,4.55,3.12,3.41,4.20,3.22,1.80,1.94,3.51);
+		ZoneSunshine zoneSunshine134 = new ZoneSunshine("경기도","부천",2.75,3.04,4.55,4.67,4.85,4.55,3.12,3.41,4.20,3.22,1.80,1.94,3.51);
+		ZoneSunshine zoneSunshine135 = new ZoneSunshine("경기도","시흥",2.75,3.04,4.55,4.67,4.85,4.55,3.12,3.41,4.20,3.22,1.80,1.94,3.51);
+		ZoneSunshine zoneSunshine136 = new ZoneSunshine("경기도","안산",2.75,3.04,4.55,4.67,4.85,4.55,3.12,3.41,4.20,3.22,1.80,1.94,3.51);
+		ZoneSunshine zoneSunshine137 = new ZoneSunshine("경기도","화성",2.71,3.12,4.53,4.72,4.82,4.63,3.09,3.42,4.25,3.33,1.81,1.92,3.53);
+		ZoneSunshine zoneSunshine138 = new ZoneSunshine("경기도","평택",2.71,3.12,4.53,4.72,4.82,4.63,3.09,3.42,4.25,3.33,1.81,1.92,3.53);
+		ZoneSunshine zoneSunshine139 = new ZoneSunshine("경기도","수원",2.71,3.12,4.53,4.72,4.82,4.63,3.09,3.42,4.25,3.33,1.81,1.92,3.53);
+		ZoneSunshine zoneSunshine140 = new ZoneSunshine("경기도","오산",2.71,3.12,4.53,4.72,4.82,4.63,3.09,3.42,4.25,3.33,1.81,1.92,3.53);
+		ZoneSunshine zoneSunshine141 = new ZoneSunshine("경기도","과천",2.71,3.15,4.56,4.69,4.74,4.64,3.06,3.41,4.15,3.26,1.88,1.92,3.51);
+		ZoneSunshine zoneSunshine142 = new ZoneSunshine("경기도","안양",2.71,3.15,4.56,4.69,4.74,4.64,3.06,3.41,4.15,3.26,1.88,1.92,3.51);
+		ZoneSunshine zoneSunshine143 = new ZoneSunshine("경기도","의왕",2.71,3.15,4.56,4.69,4.74,4.64,3.06,3.41,4.15,3.26,1.88,1.92,3.51);
+		ZoneSunshine zoneSunshine144 = new ZoneSunshine("경기도","성남",2.71,3.15,4.56,4.69,4.74,4.64,3.06,3.41,4.15,3.26,1.88,1.92,3.51);
+		ZoneSunshine zoneSunshine145 = new ZoneSunshine("경기도","용인",2.68,3.05,4.54,4.66,4.88,4.56,3.03,3.41,4.21,3.15,1.84,1.97,3.50);
+		ZoneSunshine zoneSunshine146 = new ZoneSunshine("경기도","이천",2.68,3.05,4.54,4.66,4.88,4.56,3.03,3.41,4.21,3.15,1.84,1.97,3.50);
+		ZoneSunshine zoneSunshine147 = new ZoneSunshine("경기도","광주",2.68,3.05,4.54,4.66,4.88,4.56,3.03,3.41,4.21,3.15,1.84,1.97,3.50);
+		ZoneSunshine zoneSunshine148 = new ZoneSunshine("경기도","여주",2.68,3.05,4.54,4.66,4.88,4.56,3.03,3.41,4.21,3.15,1.84,1.97,3.50);
+		ZoneSunshine zoneSunshine149 = new ZoneSunshine("경기도","양평",2.68,3.05,4.54,4.66,4.88,4.56,3.03,3.41,4.21,3.15,1.84,1.97,3.50);
+		ZoneSunshine zoneSunshine150 = new ZoneSunshine("경기도","하남",2.67,3.07,4.44,4.74,4.85,4.58,3.05,3.52,4.19,3.18,1.81,1.93,3.50);
+		ZoneSunshine zoneSunshine151 = new ZoneSunshine("경기도","구리",2.67,3.07,4.44,4.74,4.85,4.58,3.05,3.52,4.19,3.18,1.81,1.93,3.50);
+		ZoneSunshine zoneSunshine152 = new ZoneSunshine("경기도","남양주",2.67,3.07,4.44,4.74,4.85,4.58,3.05,3.52,4.19,3.18,1.81,1.93,3.50);
+		ZoneSunshine zoneSunshine153 = new ZoneSunshine("경기도","가평",2.67,3.07,4.44,4.74,4.85,4.58,3.05,3.52,4.19,3.18,1.81,1.93,3.50);
 		zoneSunshineRepository.save(zoneSunshine1);
 		zoneSunshineRepository.save(zoneSunshine2);
 		zoneSunshineRepository.save(zoneSunshine3);
@@ -300,6 +322,28 @@ public class MapService {
 		zoneSunshineRepository.save(zoneSunshine129);
 		zoneSunshineRepository.save(zoneSunshine130);
 		zoneSunshineRepository.save(zoneSunshine131);
+		zoneSunshineRepository.save(zoneSunshine132);
+		zoneSunshineRepository.save(zoneSunshine133);
+		zoneSunshineRepository.save(zoneSunshine134);
+		zoneSunshineRepository.save(zoneSunshine135);
+		zoneSunshineRepository.save(zoneSunshine136);
+		zoneSunshineRepository.save(zoneSunshine137);
+		zoneSunshineRepository.save(zoneSunshine138);
+		zoneSunshineRepository.save(zoneSunshine139);
+		zoneSunshineRepository.save(zoneSunshine140);
+		zoneSunshineRepository.save(zoneSunshine141);
+		zoneSunshineRepository.save(zoneSunshine142);
+		zoneSunshineRepository.save(zoneSunshine143);
+		zoneSunshineRepository.save(zoneSunshine144);
+		zoneSunshineRepository.save(zoneSunshine145);
+		zoneSunshineRepository.save(zoneSunshine146);
+		zoneSunshineRepository.save(zoneSunshine147);
+		zoneSunshineRepository.save(zoneSunshine148);
+		zoneSunshineRepository.save(zoneSunshine149);
+		zoneSunshineRepository.save(zoneSunshine150);
+		zoneSunshineRepository.save(zoneSunshine151);
+		zoneSunshineRepository.save(zoneSunshine152);
+		zoneSunshineRepository.save(zoneSunshine153);
 		
 	}
 }
