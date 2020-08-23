@@ -533,6 +533,14 @@ public class DataController {
 
                     // 변전소 여유용량
                     if (node.getNodeName().equals("vol_1")) {
+                        returnVo.setVol_2(node.getTextContent());
+                    }
+
+                    if (node.getNodeName().equals("vol_2")) {
+                        returnVo.setVol_3(node.getTextContent());
+                    }
+
+                    if (node.getNodeName().equals("vol_3")) {
                         returnVo.setVol_1(node.getTextContent());
                     }
 
