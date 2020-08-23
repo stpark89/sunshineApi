@@ -10,7 +10,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/jquery.form.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <style>
         body {
             font: 400 15px Lato, sans-serif;
@@ -71,57 +70,46 @@
     </div>
 </div>
 <!-- Container (Services Section) -->
-<div id="services" class="container-fluid text-center">
-    <h2>SERVICES</h2>
-    <br>
+<div class="container-fluid text-center">
     <div class="row">
-        <div class="col-sm-4" id="recDiv">
-            <i class="fas fa-receipt" style="font-size: 32px;"></i>
-            <h4>REC Data</h4>
-            <p>Rec 데이터 업로드</p>
+        <div class="col-sm-3">
+            <div class="card bg-light text-dark">
+                <div class="card-body">
+                    <p>Rec 정보 파일 업로드</p>
+                    <hr/>
+                    <input class="form-control" type="file" id="excelFileUpload">
+                    <input class="btn btn-info mt-2" type="button" id="btnFileUpload" value="파일업로드">
+                </div>
+            </div>
         </div>
-        <div class="col-sm-4">
-            <span class="glyphicon glyphicon-heart logo-small"></span>
-            <h4>Mail</h4>
-            <p>구독 신청자 메일 리스트</p>
-        </div>
-        <div class="col-sm-4">
-            <span class="glyphicon glyphicon-lock logo-small"></span>
-            <h4>JOB DONE</h4>
-            <p>Lorem ipsum dolor sit amet..</p>
-        </div>
-    </div>
-    <br><br>
-    <div class="row slideanim">
-        <div class="col-sm-4">
-            <span class="glyphicon glyphicon-leaf logo-small"></span>
-            <h4>GREEN</h4>
-            <p>Lorem ipsum dolor sit amet..</p>
-        </div>
-        <div class="col-sm-4">
-            <span class="glyphicon glyphicon-certificate logo-small"></span>
-            <h4>CERTIFIED</h4>
-            <p>Lorem ipsum dolor sit amet..</p>
-        </div>
-        <div class="col-sm-4">
-            <span class="glyphicon glyphicon-wrench logo-small"></span>
-            <h4 style="color:#303030;">HARD WORK</h4>
-            <p>Lorem ipsum dolor sit amet..</p>
+        <div class="col-sm-9">
+            <p>데이터 조회. </p>
         </div>
     </div>
 </div>
 
-
-<script>
-
+    <script>
         $(document).ready(function(){
+            $('#btnFileUpload').on("click", function(){
+                // 원하는 것만 넘겨주는 방식
+                var formData = new FormData();
+                formData.append("file", $("#excelFileUpload")[0].files[0]);
+                $.ajax(
+                    {
+                        type: 'POST',
+                        url: '${pageContext.request.contextPath}/adminData/recExcelUpload',
+                        processData: false, // 필수
+                        contentType: false, // 필수
+                        data: formData,
+                        success: function(data) {
 
-            $('#recDiv').on("click", function(){
-                location.href='${pageContext.request.contextPath}/admin/recDataView';
+                            alert('성공');
+                            console.log(data);
+                        }
+                    }
+                );
             });
         });
-
-</script>
+    </script>
 
 </body>
-</html>

@@ -20,7 +20,7 @@ public class AdminViewController {
     @Autowired
     private AdminService adminService;
 
-    @RequestMapping(value={"/index"})
+    @RequestMapping(value={"/","/index"})
     public Object index(){
         log.info("index View");
 
@@ -65,6 +65,15 @@ public class AdminViewController {
             return new RedirectView("/admin/index");
         }
         return new RedirectView("/admin/adminLoginView");
+    }
+
+    /**
+     * Rec Data  파일 업로드 하는 페이지.
+     * @return
+     */
+    @RequestMapping(value="/recDataView")
+    public String recDataView(){
+        return "rec/recDataView";
     }
 
 }
