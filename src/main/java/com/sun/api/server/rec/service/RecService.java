@@ -11,6 +11,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import com.sun.api.server.rec.repository.RecRepository;
 import com.sun.api.server.vo.RecVo;
 
 import lombok.extern.java.Log;
+import org.springframework.web.multipart.MultipartFile;
 
 @Log
 @Service
@@ -35,15 +37,15 @@ public class RecService {
 		return returnData;
 		
 	}
-	public void saveRecData (File file)  {
-		
-		ClassPathResource recFile = new ClassPathResource(file.getParent()+"/"+file.getName());
-		//ClassPathResource recFile = new ClassPathResource("data/200820현물속보.xls");
-		
+	public void saveRecData (MultipartFile file, String originalFileName)  {
+
+
+		log.info("Service ---");
+
 		// Rec DATA - 육상
 		RecVo recVo = new RecVo();
 		RecVo jejuRecVo = new RecVo();
-		Sheet worksheet = getSheet(recFile);
+		Sheet worksheet = getSheet(file);
 		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
 		//중복체크
@@ -90,10 +92,10 @@ public class RecService {
 	
 	
 	
-	private Sheet getSheet(ClassPathResource classPathResource){
+	private Sheet getSheet(MultipartFile file){
 		Sheet workSheet = null;
 		try {
-			Workbook workbook = new HSSFWorkbook(classPathResource.getInputStream());
+			Workbook workbook = new HSSFWorkbook(file.getInputStream());
 			workSheet = workbook.getSheetAt(0);
 		}catch (Exception e){
 			e.printStackTrace();

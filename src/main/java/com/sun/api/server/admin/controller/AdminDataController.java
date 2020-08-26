@@ -3,6 +3,7 @@ package com.sun.api.server.admin.controller;
 import lombok.extern.java.Log;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,8 +19,8 @@ import java.io.File;
 @RequestMapping(value="/adminData")
 @RestController
 public class AdminDataController {
-	
-	@Autowired
+
+    @Autowired
 	RecService recService = new RecService();
 
     @RequestMapping(value="/recExcelUpload")
@@ -28,11 +29,16 @@ public class AdminDataController {
         log.info(file.getOriginalFilename());
         log.info("Rec 파일 업로드");
 
-        File targetFile = new File("/Users/inina/fileTemp/" + file.getOriginalFilename());
+        // File targetFile = new File("C:/rec/"+file.getOriginalFilename());
+        File targetFile = new File("Users/inina/"+file.getOriginalFilename());
+
         try {
             InputStream fileStream = file.getInputStream();
             FileUtils.copyInputStreamToFile(fileStream, targetFile);
-            recService.saveRecData(targetFile);
+
+            String originalFileName = file.getOriginalFilename();
+
+            recService.saveRecData(file, originalFileName);
         }catch (Exception e){
             e.printStackTrace();
         }

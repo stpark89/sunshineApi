@@ -30,13 +30,14 @@ public class RecController {
 	/**
      * Smp Data 조회
      * @return
-     */
+
     @RequestMapping(value="/saveRecData")
     public Map<String,Object> saveRecData(){
         log.info("save Rec Data");
         recService.saveRecData(null);
         return null;
     }
+     */
 
     /**
      * Smp Data 조회
