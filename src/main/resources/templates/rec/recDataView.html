@@ -1,15 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/static/js/jquery.form.min.js"></script>
+    <script src="${#httpServletRequest.getContextPath()}/resources/static/js/jquery.form.min.js"></script>
+    <script>
+        var BASE_CONTEXT_PATH = $('meta[name=context-path]').attr("content");
+        BASE_CONTEXT_PATH = BASE_CONTEXT_PATH.substr(0, BASE_CONTEXT_PATH.length - 1);
+    </script>
     <style>
         body {
             font: 400 15px Lato, sans-serif;
@@ -88,28 +91,29 @@
     </div>
 </div>
 
-    <script>
-        $(document).ready(function(){
-            $('#btnFileUpload').on("click", function(){
-                // 원하는 것만 넘겨주는 방식
-                var formData = new FormData();
-                formData.append("file", $("#excelFileUpload")[0].files[0]);
-                $.ajax(
-                    {
-                        type: 'POST',
-                        url: '${pageContext.request.contextPath}/adminData/recExcelUpload',
-                        processData: false, // 필수
-                        contentType: false, // 필수
-                        data: formData,
-                        success: function(data) {
+<script>
+    $(document).ready(function(){
+        $('#btnFileUpload').on("click", function(){
+            // 원하는 것만 넘겨주는 방식
+            var formData = new FormData();
+            formData.append("file", $("#excelFileUpload")[0].files[0]);
+            $.ajax(
+                {
+                    type: 'POST',
+                    url: '/adminData/recExcelUpload',
+                    processData: false, // 필수
+                    contentType: false, // 필수
+                    data: formData,
+                    success: function(data) {
 
-                            alert('성공');
-                            console.log(data);
-                        }
+                        alert('성공');
+                        console.log(data);
                     }
-                );
-            });
+                }
+            );
         });
-    </script>
+    });
+</script>
 
 </body>
+</html>

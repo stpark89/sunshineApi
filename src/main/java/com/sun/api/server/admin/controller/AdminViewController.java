@@ -21,7 +21,7 @@ public class AdminViewController {
     private AdminService adminService;
 
     @RequestMapping(value={"/","/index"})
-    public Object index(){
+    public String index(){
         log.info("index View");
 
         HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -30,7 +30,8 @@ public class AdminViewController {
         AdminUserVo loginUser = (AdminUserVo)session.getAttribute("admin");
         if(loginUser == null){
             log.info("로그인페이지 이동 필요");
-            return new RedirectView("/admin/adminLoginView");
+             return "redirect:/admin/adminLoginView";
+            // return new RedirectView("/admin/adminLoginView");
         }else{
             log.info("로그인 성공한 상태");
         }

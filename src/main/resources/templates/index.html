@@ -1,16 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="context-path" th:content="@{/}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/static/js/jquery.form.min.js"></script>
+    <script src="${#httpServletRequest.getContextPath()}/resources/static/js/jquery.form.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script>
+    var BASE_CONTEXT_PATH = $('meta[name=context-path]').attr("content");
+    BASE_CONTEXT_PATH = BASE_CONTEXT_PATH.substr(0, BASE_CONTEXT_PATH.length - 1);
+    </script>
+
     <style>
         body {
             font: 400 15px Lato, sans-serif;
@@ -114,12 +118,13 @@
 
 <script>
 
-        $(document).ready(function(){
+    $(document).ready(function(){
 
-            $('#recDiv').on("click", function(){
-                location.href='${pageContext.request.contextPath}/admin/recDataView';
-            });
+
+        $('#recDiv').on("click", function(){
+            location.href=BASE_CONTEXT_PATH+'/admin/recDataView';
         });
+    });
 
 </script>
 
