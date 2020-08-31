@@ -40,13 +40,24 @@ public class RecController {
      */
 
     /**
-     * Smp Data 조회
+     * 최근 Smp Data 조회
      * @return
      */
     @RequestMapping(value="/findLastRecData")
     public Map<String,Object> findLastRecData(){
         log.info("find Last Rec Data");
-        return recService.lastRecData();
+        return recService.finLastRecData();
     }
+    
+    /**
+     * Smp Data 조회
+     * @return
+     */
+    @RequestMapping(value="/findRecData")
+    public Map<String,Object> findRecData(){
+        log.info("find Rec Data");
+        return recService.findRecData();
+    }
+    
     
 }

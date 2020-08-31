@@ -27,8 +27,19 @@ public class RecService {
 
 	@Autowired
 	RecRepository recRepository;
+
 	
-	public Map<String, Object> lastRecData(){
+	public Map<String, Object> findRecData(){
+		Map<String, Object> returnData = new HashMap<>();
+		returnData.put("rec", recRepository.findBySearchRecData());
+		returnData.put("recJeju", recRepository.findBySearchJejuRecdData());
+		
+		
+		return returnData;
+		
+	}
+	
+	public Map<String, Object> finLastRecData(){
 		Map<String, Object> returnData = new HashMap<>();
 		returnData.put("rec", recRepository.findBySearchLastRecData());
 		returnData.put("recJeju", recRepository.findBySearchLastJejuRecdData());
@@ -37,6 +48,7 @@ public class RecService {
 		return returnData;
 		
 	}
+	
 	public void saveRecData (MultipartFile file, String originalFileName)  {
 
 
