@@ -371,14 +371,18 @@ public class DataController {
 
         BuildingDetailResponseVo returnVo = new BuildingDetailResponseVo();
 
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1611000/BldRgstService/getBrRecapTitleInfo"); /*URL*/
+
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1611000/BldRgstService/getBrTitleInfo");
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=Fme5h1A7V%2FpidUohmsSaThadKOjWD1uzoovGYVhGtOhwcs5pIMxrOVHuHnBpH0FLspGWQorec8u7o6xAnUaXLQ%3D%3D"); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("sigunguCd","UTF-8") + "=" + URLEncoder.encode(requestVo.getSigunguCd(), "UTF-8")); /*행정표준코드*/
         urlBuilder.append("&" + URLEncoder.encode("bjdongCd","UTF-8") + "=" + URLEncoder.encode(requestVo.getBjdongCd(), "UTF-8")); /*행정표준코드*/
         urlBuilder.append("&" + URLEncoder.encode("platGbCd","UTF-8") + "=" + URLEncoder.encode(requestVo.getPlatGbCd(), "UTF-8")); /*0:대지 1:산 2:블록*/
         urlBuilder.append("&" + URLEncoder.encode("bun","UTF-8") + "=" + URLEncoder.encode(requestVo.getBun(), "UTF-8")); /*번*/
         urlBuilder.append("&" + URLEncoder.encode("ji","UTF-8") + "=" + URLEncoder.encode(requestVo.getJi(), "UTF-8")); /*지*/
-   
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*페이지당 목록 수*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+
+
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
