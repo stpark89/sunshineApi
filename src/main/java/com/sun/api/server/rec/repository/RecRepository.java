@@ -16,10 +16,10 @@ public interface RecRepository extends JpaRepository<RecVo, Long>{
 	@Query(value = "SELECT * FROM rec_vo where division = 1 order by trade_date DESC limit 1", nativeQuery = true)
 	RecVo findBySearchLastJejuRecdData();
 	
-	@Query(value = "SELECT * FROM rec_vo where division = 0", nativeQuery = true)
+	@Query(value = "SELECT * FROM rec_vo where division = 0 order by trade_date DESC", nativeQuery = true)
 	List<RecVo> findBySearchRecData();
 	
-	@Query(value = "SELECT * FROM rec_vo where division = 1", nativeQuery = true)
+	@Query(value = "SELECT * FROM rec_vo where division = 1 order by trade_date DESC", nativeQuery = true)
 	List<RecVo> findBySearchJejuRecdData();
 	
 	@Query(value = "SELECT count(1) FROM rec_vo WHERE trade_date_string =:tradeDateString", nativeQuery = true)
