@@ -74,7 +74,27 @@ public class AdminViewController {
      */
     @RequestMapping(value="/recDataView")
     public String recDataView(){
-        return "rec/recDataView";
+        return "/rec/recDataView";
+    }
+
+    /**
+     * 발전소 분양
+     * @return
+     */
+    @RequestMapping(value="/tradeView")
+    public String tradeView() {
+        log.info("tradeView > ");
+        return "/trade/tradeView";
+    }
+
+    /**
+     * 발전소 분양 등록페이지
+     * @return
+     */
+    @RequestMapping(value="/tradeWriteForm")
+    public String tradeWriteForm(){
+        log.info("tradeWriteForm");
+        return "/trade/tradeWriteView";
     }
 
 }

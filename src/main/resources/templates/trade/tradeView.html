@@ -51,7 +51,6 @@
     </style>
 </head>
 <body>
-
 <div class="container-fluid" style="padding:0">
     <div class="row">
         <div class="col-sm-12">
@@ -70,44 +69,59 @@
 <!-- Container (Services Section) -->
 <div class="container-fluid text-center">
     <div class="row">
-        <div class="col-sm-3">
-            <div class="card bg-light text-dark">
-                <div class="card-body">
-                    <p>Rec 정보 파일 업로드</p>
-                    <hr/>
-                    <input class="form-control" type="file" id="excelFileUpload">
-                    <input class="btn btn-info mt-2" type="button" id="btnFileUpload" value="파일업로드">
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-9">
-            <p>데이터 조회. </p>
-        </div>
+       <div class="col-sm-12">
+           <h5>발전소 매매 리스트</h5>
+           <table class="table table-bordered">
+               <thead>
+               <tr>
+                   <th>No</th>
+                   <th>지역</th>
+                   <th>수익률</th>
+                   <th>매도가격</th>
+                   <th>월매출평균</th>
+                   <th>발전시간</th>
+                   <th>발전소 연차</th>
+                   <th>REC 계약형태</th>
+                   <th>설치위치</th>
+                   <th>가중치</th>
+                   <th>판매상태</th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr>
+                   <td>John</td>
+                   <td>Doe</td>
+                   <td>john@example.com</td>
+                   <td>John</td>
+                   <td>Doe</td>
+                   <td>john@example.com</td>
+                   <td>John</td>
+                   <td>Doe</td>
+                   <td>john@example.com</td>
+                   <td>John</td>
+                   <td>Doe</td>
+               </tr>
+               </tbody>
+           </table>
+           <div style="text-align: right;">
+                <button class="btn btn-default" id="btnWrite">발전소 등록</button>
+           </div>
+       </div>
     </div>
 </div>
 
 <script>
-    $(document).ready(function(){
-        $('#btnFileUpload').on("click", function(){
-            // 원하는 것만 넘겨주는 방식
-            var formData = new FormData();
-            formData.append("file", $("#excelFileUpload")[0].files[0]);
-            $.ajax(
-                {
-                    type: 'POST',
-                    url: '/adminData/recExcelUpload',
-                    processData: false, // 필수
-                    contentType: false, // 필수
-                    data: formData,
-                    success: function(data) {
 
-                        alert('성공');
-                        console.log(data);
-                    }
-                }
-            );
+    $(document).ready(function(){
+
+        // Rec 파일 업로드.
+        $('#btnWrite').on("click", function(){
+            alert('버튼 클릭');
+            location.href='/admin/tradeWriteForm';
         });
+
     });
+
 </script>
 
 </body>
