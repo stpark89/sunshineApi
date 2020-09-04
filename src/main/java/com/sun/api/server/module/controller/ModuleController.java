@@ -45,6 +45,14 @@ public class ModuleController {
         
     }	
 	
+	@RequestMapping(value="/searchInverterOne")
+	public Optional<InverterInfoVo> searchInverterOne(@RequestBody long id){
+        log.info("searchInverterOne");
+        return moduleService.searchInverterOne(id);
+        
+    }
+	
+	
 	@RequestMapping(value="/saveInverter")
 	public void saveInverter(){
         moduleService.saveInverter();

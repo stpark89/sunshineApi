@@ -47,6 +47,15 @@ public class ModuleService {
 	}
 	
 	/**
+	 * 인버터 단건 조회 
+	 * @param id
+	 * @return
+	 */
+	public Optional<InverterInfoVo> searchInverterOne(long id){
+		return inverterInfoVoRepository.findById(id);
+	}
+	
+	/**
 	 * 인버터 데이터 저장 임시 
 	 */
 	public void saveInverter() {
