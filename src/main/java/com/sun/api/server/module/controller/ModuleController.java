@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sun.api.server.module.service.ModuleService;
+import com.sun.api.server.module.vo.InverterInfoVo;
 import com.sun.api.server.vo.module.ModuleInfoVo;
 
 import lombok.extern.java.Log;
@@ -36,5 +37,18 @@ public class ModuleController {
         return moduleService.searchModuleOne(id);
         
     }
+	
+	@RequestMapping(value="/searchInverter")
+	public List<InverterInfoVo> searchInverter(){
+        log.info("searchInverter");
+        return moduleService.searchInverter();
+        
+    }	
+	
+	@RequestMapping(value="/saveInverter")
+	public void saveInverter(){
+        moduleService.saveInverter();
+    }
+	
 	
 }
