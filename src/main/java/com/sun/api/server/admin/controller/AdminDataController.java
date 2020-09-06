@@ -29,8 +29,8 @@ public class AdminDataController {
         log.info(file.getOriginalFilename());
         log.info("Rec 파일 업로드");
 
-        // File targetFile = new File("C:/rec/"+file.getOriginalFilename());
-        File targetFile = new File("Users/inina/"+file.getOriginalFilename());
+        File targetFile = new File("C:/rec/"+file.getOriginalFilename());
+        //File targetFile = new File("Users/inina/"+file.getOriginalFilename());
 
         try {
             InputStream fileStream = file.getInputStream();
