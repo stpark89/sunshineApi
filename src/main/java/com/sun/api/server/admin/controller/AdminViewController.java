@@ -107,4 +107,15 @@ public class AdminViewController {
         return "tradeWriteView";
     }
 
+    /**
+     * 발전소 분양
+     * @return
+     */
+    @RequestMapping(value="/subdivisionView")
+    public String subdivisionView(){
+        log.info("subDivisionView");
+        return "subDivisionView";
+    }
+
+
 }
