@@ -3,6 +3,7 @@ package com.sun.api.server.trade.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.sun.api.server.trade.vo.TradeRequestVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,7 @@ import com.sun.api.server.trade.service.TradeService;
 import com.sun.api.server.trade.vo.TradeVo;
 
 import lombok.extern.java.Log;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Log
 @CrossOrigin(origins = "*")
@@ -23,13 +25,7 @@ public class TradeController {
 	
 	@Autowired
 	private TradeService tradeService;
-	
-    @RequestMapping(value="/fetchTradeInfo")
-    public TradeVo fetchTradeInfo(int id){
-        log.info("id : " +id);
 
-        return null;
-    }
     
     /**
      * 발전소 매매 조회 
@@ -43,14 +39,24 @@ public class TradeController {
     }
     /**
      * 발전소 매매 단건 조회 
-     * @param id
+     * @param newId
      * @return
      */
     @RequestMapping(value="/searchTradeOne")
-	public Optional<TradeVo> searchTradeOne(@RequestBody long id){
-        log.info("searchTradeOne");
-        return tradeService.searchTradeVoOne(id);
-        
+	public Optional<TradeVo> searchTradeOne(String newId){
+        log.info("searchTradeOne"+newId);
+        return tradeService.searchTradeVoOne(Long.parseLong(newId));
+    }
+
+    /**
+     * 리액트 호출
+     * @param vo
+     * @return
+     */
+    @RequestMapping(value="/frontSearchTradeOne")
+    public Optional<TradeVo> frontSearchTradeOne(@RequestBody TradeRequestVo vo){
+        log.info("searchTradeOne : "+vo.getNewId());
+        return tradeService.searchTradeVoOne(Long.parseLong(vo.getNewId()));
     }
     
     /**
@@ -58,10 +64,14 @@ public class TradeController {
      * @param tradeVo
      */
     @RequestMapping(value="/saveTrade")
-	public void saveTrade(@RequestBody TradeVo tradeVo){
+	public Object saveTrade(TradeVo tradeVo){
         log.info("saveTrade");
-        tradeService.saveTradeVo(tradeVo);
-        
+        try {
+           tradeService.saveTradeVo(tradeVo);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new RedirectView("/admin/tradeView");
     }    
     
     /**
