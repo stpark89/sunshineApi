@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/js/bootstrap4-toggle.min.js"></script>
+
+    <style>
+        body {
+            font: 400 15px Lato, sans-serif;
+            line-height: 1.8;
+            color: #818181;
+        }
+        h2 {
+            font-size: 24px;
+            text-transform: uppercase;
+            color: #303030;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+        h4 {
+            font-size: 19px;
+            line-height: 1.375em;
+            color: #303030;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+        .jumbotron {
+            background-color: #f4511e;
+            color: #fff;
+            padding: 100px 25px;
+            font-family: Montserrat, sans-serif;
+        }
+        .container-fluid {
+            padding: 60px 50px;
+        }
+        .bg-grey {
+            background-color: #f6f6f6;
+        }
+        .logo-small {
+            color: #f4511e;
+            font-size: 50px;
+        }
+        .logo {
+            color: #f4511e;
+            font-size: 200px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid" style="padding:0">
+    <div class="row">
+        <div class="col-sm-12">
+            <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                <!-- Brand -->
+                <a class="navbar-brand" href="#">관리자 페이지</a>
+
+                <!-- Toggler/collapsibe Button -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" style="padding:0">
+    <div class="row" style="width:1080px; margin: 0 auto;">
+        <div class="col-sm-12">
+            <h5 class="mt-2">발전소분양 상세정보</h5>
+            <form action="/subdivision/saveSubdivision" method="post" id="modifyForm">
+                <input type="hidden" id="hiddenId" name="id">
+                <table class="table customTable">
+                    <tr>
+                        <th>주소</th>
+                        <td><input type="text" class="form-control tradeInfo" name="location"></td>
+                        <th>설치용량</th>
+                        <td><input type="number" step="any" class="form-control tradeInfo" name="kw"></td>
+                    </tr>
+                    <tr>
+                        <th>수익률</th>
+                        <td colspan="3"><input type="number" step="any" class="form-control tradeInfo" name="yields"></td>
+                    </tr>
+                    <tr>
+                        <th>매도가격</th>
+                        <td colspan="3"><input type="number" class="form-control tradeInfo" name="price"></td>
+                    </tr>
+                    <tr>
+                        <th>월평균 매출</th>
+                        <td colspan="3"><input type="number" class="form-control tradeInfo" name="averageMonthlySales"></td>
+                    </tr>
+                    <tr>
+                        <th>발전시간</th>
+                        <td><input type="number" step="any" class="form-control tradeInfo" name="powerGenerationTime"></td>
+                        <th>REC 가중치</th>
+                        <td>
+                            <select id="selectRecWeight" class="custom-select tradeInfo" name="recWeight">
+                                <option value="0.7">0.7</option>
+                                <option value="1.0">1.0</option>
+                                <option value="1.2">1.2</option>
+                                <option value="1.5">1.5</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>발전소 연차</th>
+                        <td><input type="text" class="form-control tradeInfo" name="years"></td>
+                        <th>Rec 계약형태</th>
+                        <td><input type="text" class="form-control tradeInfo" name="recContractType"></td>
+                    </tr>
+                    <tr>
+                        <th>연간 운영관리비</th>
+                        <td><input type="text" class="form-control tradeInfo" name="operatingCost"></td>
+                        <th>인버터</th>
+                        <td><input type="text" class="form-control tradeInfo" name="inverter"></td>
+                    </tr>
+                    <tr>
+                        <th>발전시작월</th>
+                        <td><input type="month" class="form-control tradeInfo" name="developmentStartMonth"></td>
+                        <th>고정지출 항목</th>
+                        <td><input type="text" class="form-control tradeInfo" name="fixedExpenses"></td>
+                    </tr>
+                    <tr>
+                        <th>패널</th>
+                        <td colspan="3"><input type="text" class="form-control tradeInfo" name="panel"></td>
+                    </tr>
+                    <tr>
+                    </tr>
+                    <tr>
+                        <th>대출연계</th>
+                        <td><input type="text" class="form-control tradeInfo" name="loanLinkage"></td>
+                        <th>구조물타입</th>
+                        <td><input type="text" class="form-control tradeInfo" name="structureType"></td>
+                    </tr>
+                    <tr>
+                        <th>남은 대출금액</th>
+                        <td><input type="text" class="form-control tradeInfo" name="remainsLoanCost"></td>
+                        <th>토지면적</th>
+                        <td><input type="text" class="form-control tradeInfo" name="landExten"></td>
+                    </tr>
+                    <tr>
+                        <th>구매 상태</th>
+                        <td colspan="3">
+                            <input id="toggle" name="salesStatus" type="checkbox" data-on="판매완료" data-off="판매완료" data-toggle="toggle">
+                        </td>
+                    </tr>
+                </table>
+                <div style="text-align: right;">
+                    <button type="submit" class="btn btn-info" id="btnModify">수정</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+
+    $(document).ready(function() {
+
+        // initial
+        // $('#toggle').bootstrapToggle();
+
+        var modelAttributeValue = Number([[${subdivisionId}]]);
+        alert(modelAttributeValue);
+        $('#hiddenId').val(modelAttributeValue);
+        $.ajax({
+            url : '/subdivision/searchSubdivisionOne',
+            data : {newId : modelAttributeValue},
+            success : function (data) {
+                for(let i = 0; i < Object.keys(data).length; i++) {
+                    const inputName = Object.keys(data)[i];
+                    if (inputName === 'recWeight') {
+                        $('#selectRecWeight').val(data[inputName]).prop("selected", true);
+                    }else if(inputName === 'salesStatus'){
+                        // 매매 상태 값 - false 이면 홍보
+                        console.log(data[inputName]);
+
+                        // Default - 등록시 false 값 들어감.
+                        if(!data[inputName]){
+                            $('#toggle').bootstrapToggle();
+                            $('#toggle').bootstrapToggle('on');
+                        }
+                    } else {
+                        $('input[name=' + inputName + ']').val(data[inputName]);
+                    }
+                }
+            }
+        });
+
+        $('#selectRecWeight').on('change', function(){
+            console.log($(this).val());
+            $('#selectRecWeight').val($(this).val());
+        });
+
+        // 수정버튼 클릭시
+        $('#btnModify').on('click', function(){
+
+            if(confirm('수정하시겠습니까 ?')){
+                return true;
+            }else{
+                return false;
+            }
+
+        });
+
+    });
+
+    /*]]>*/
+</script>
+
+</body>
+</html>
