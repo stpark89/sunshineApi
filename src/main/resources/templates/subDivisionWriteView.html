@@ -69,9 +69,8 @@
 <div class="container-fluid" style="padding:0">
     <div class="row" style="width:1080px; margin: 0 auto;">
         <div class="col-sm-12">
-            <h5 class="mt-2">발전소분양 상세정보</h5>
-            <form action="/subdivision/saveSubdivision" method="post" id="modifyForm" enctype="multipart/form-data">
-                <input type="hidden" id="hiddenId" name="id">
+            <h5 class="mt-2">발전소분양 등록</h5>
+            <form action="/subdivision/saveSubdivision" method="post" enctype="multipart/form-data">
                 <table class="table customTable">
                     <tr>
                         <th>주소</th>
@@ -148,7 +147,7 @@
                     </tr>
                 </table>
                 <div style="text-align: right;">
-                    <button type="submit" class="btn btn-info" id="btnModify">수정</button>
+                    <button type="submit" class="btn btn-info" id="btnModify">등록</button>
                 </div>
             </form>
         </div>

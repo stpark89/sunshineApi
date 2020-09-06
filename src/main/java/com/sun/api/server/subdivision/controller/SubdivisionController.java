@@ -51,8 +51,11 @@ public class SubdivisionController {
 	public Optional<SubdivisionVo> searchSubdivisionOne(String newId){
         log.info("searchSubdivisionOne");
         List<String> imgList = new ArrayList<String>();
-        for (File info : new File("Users/inina/subdivision/"+newId).listFiles()) {
-        	imgList.add(info.getPath());
+
+        if(new File("Users/inina/subdivision/"+newId).exists()){
+            for (File info : new File("Users/inina/subdivision/"+newId).listFiles()) {
+                imgList.add(info.getPath());
+            }
         }
         //imageUrl
         Optional<SubdivisionVo> returnVo = subdivisionService.searchSubdivisionVoOne(Long.parseLong(newId));

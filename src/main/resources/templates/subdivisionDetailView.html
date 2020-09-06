@@ -168,12 +168,15 @@
         // $('#toggle').bootstrapToggle();
 
         var modelAttributeValue = Number([[${subdivisionId}]]);
-        alert(modelAttributeValue);
         $('#hiddenId').val(modelAttributeValue);
         $.ajax({
             url : '/subdivision/searchSubdivisionOne',
             data : {newId : modelAttributeValue},
             success : function (data) {
+
+                console.log(data);
+                debugger;
+
                 for(let i = 0; i < Object.keys(data).length; i++) {
                     const inputName = Object.keys(data)[i];
                     if (inputName === 'recWeight') {
