@@ -31,10 +31,26 @@ public class InQuireController {
         return inquireService.inquireRequest(vo);
     }
 
+    /**
+     * 문의하기 전체 조회 
+     * @return
+     */
     @RequestMapping(value="/selectAllInQuire")
     public List<InQuireVo> selectAllInQuire(){
         log.info("inquire.selectAllInQuire");
-        return null;
+        return inquireService.selectAllInQuire();
     }
+    
+    /**
+     * 문의하기 타입 조회 
+     * @param vo
+     * @return
+     */
+    @RequestMapping(value="/selectInQuireType")
+    public List<InQuireVo> selectInQuireType(@RequestBody InQuireVo vo){
+        log.info("inquire.selectInQuireType");
+        return inquireService.selectInQuireType(vo);
+    }
+    
 
 }

@@ -3,6 +3,9 @@ package com.sun.api.server.inquire.service;
 import com.sun.api.server.inquire.repository.InQuireRepository;
 import com.sun.api.server.inquire.vo.InQuireVo;
 import lombok.extern.java.Log;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +31,15 @@ public class InQuireService {
             return "fail";
         }
     }
+    
+    public List<InQuireVo> selectAllInQuire(){
+    	return repository.findAll();
+    }
+    
+    public List<InQuireVo> selectInQuireType(InQuireVo inQuireVo){
+    	return repository.findInQuireType(inQuireVo.getInquireType());
+    	
+    }
+    
 
 }
