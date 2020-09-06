@@ -16,7 +16,7 @@ import lombok.extern.java.Log;
 public class SubdivisionService {
 	
 	@Autowired
-	SubdivisionVoRepository subdivisionVoRepository;
+	private SubdivisionVoRepository subdivisionVoRepository;
 	
 	/**
 	 * 발전소 분양 전체 조회 

@@ -106,11 +106,11 @@
                 <p>발전소 구매 정보</p>
             </div>
         </div>
-        <div class="col-sm-4" style="padding:25px;">
+        <div class="col-sm-4" id="inQuire" style="padding:25px;">
             <div style="background: #ffffff; border-radius: 5px; box-shadow: 1px 1px 5px rgba(0,0,0,0.5); padding:15px;">
                 <span class="glyphicon glyphicon-heart logo-small"></span>
-                <h4>메뉴</h4>
-                <p>메뉴 설명 들어 갑니다.</p>
+                <h4>발전소 분양, 구매 문의내역</h4>
+                <p>분양, 구매 문의내역 정보조회.</p>
             </div>
         </div>
         <div class="col-sm-4" style="padding:25px;">
@@ -139,6 +139,10 @@
 
         $('#subdivision').on('click', function(){
             location.href='/admin/subdivisionView';
+        });
+
+        $('#inQuire').on('click', function(){
+            location.href='/admin/inQuireServiceList'
         });
 
     });

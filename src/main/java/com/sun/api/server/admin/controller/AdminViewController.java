@@ -136,4 +136,14 @@ public class AdminViewController {
         return "subDivisionWriteView";
     }
 
+
+    /**
+     * 발전소 분양, 발전소 구매 문의하기 페이지
+     */
+    @RequestMapping(value="/inQuireServiceList")
+    public String inQuireServiceList(){
+        log.info("inQuireServiceList");
+        return "inQuireServiceList";
+    }
+
 }
