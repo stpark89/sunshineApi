@@ -5,9 +5,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.sun.api.server.admin.service.AdminService;
 import com.sun.api.server.subdivision.repository.SubdivisionVoRepository;
 import com.sun.api.server.subdivision.vo.SubdivisionVo;
+import com.sun.api.server.trade.vo.TradeVo;
 
 import lombok.extern.java.Log;
 
@@ -16,7 +19,10 @@ import lombok.extern.java.Log;
 public class SubdivisionService {
 	
 	@Autowired
-	SubdivisionVoRepository subdivisionVoRepository;
+	private SubdivisionVoRepository subdivisionVoRepository;
+	
+	@Autowired
+	private AdminService adminService;
 	
 	/**
 	 * 발전소 분양 전체 조회 
@@ -39,8 +45,20 @@ public class SubdivisionService {
 	 * 발전소 분양 수정, 저장 
 	 * @param SubdivisionVo
 	 */
-	public void saveSubdivisionVo(SubdivisionVo subdivisionVo) {
-		subdivisionVoRepository.save(subdivisionVo);
+	public void saveSubdivisionVo(SubdivisionVo subdivisionVo,MultipartFile file) {
+		try {
+			if(subdivisionVo.getId() != 0L) {
+				adminService.deleteFolder("Users/inina/subdivision/"+subdivisionVo.getId());
+			}
+			SubdivisionVo resultVo =  subdivisionVoRepository.save(subdivisionVo);
+			String directoryPath = "Users/inina/subdivision/"+resultVo.getId(); 
+			
+			adminService.saveFiole(file, directoryPath);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 	/**
