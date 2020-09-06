@@ -58,7 +58,7 @@ public class TradeController {
         Optional<TradeVo> returnVo = tradeService.searchTradeVoOne(Long.parseLong(newId));
         returnVo.get().setImageUrl(imgList);
         
-		return tradeService.searchTradeVoOne(Long.parseLong(newId));
+		return returnVo;
 	}
 
 	/**
