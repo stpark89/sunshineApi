@@ -57,6 +57,11 @@ public class SubdivisionController {
                 imgList.add(info.getPath());
             }
         }
+
+        System.out.println("이미지 정보 유알엘 확인중 ----");
+        System.out.println(imgList.get(0).toString());
+
+
         //imageUrl
         Optional<SubdivisionVo> returnVo = subdivisionService.searchSubdivisionVoOne(Long.parseLong(newId));
         returnVo.get().setImageUrl(imgList);

@@ -52,10 +52,6 @@ public class SubdivisionService {
 			}
 			SubdivisionVo resultVo =  subdivisionVoRepository.save(subdivisionVo);
 			String directoryPath = "Users/inina/subdivision/"+resultVo.getId();
-
-			log.info("잠시 확인좀요 ----------------");
-			log.info(file.getOriginalFilename());
-
 			adminService.saveFiole(file, directoryPath);
 		}catch(Exception e){
 			e.printStackTrace();

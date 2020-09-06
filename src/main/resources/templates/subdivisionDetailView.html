@@ -74,6 +74,8 @@
     <div class="row" style="width:1080px; margin: 0 auto;">
         <div class="col-sm-12">
             <h5 class="mt-2">발전소분양 상세정보</h5>
+            <br/>
+            <img src="" id="resultImg">
             <form action="/subdivision/saveSubdivision" method="post" id="modifyForm">
                 <input type="hidden" id="hiddenId" name="id">
                 <table class="table customTable">
@@ -173,10 +175,11 @@
             url : '/subdivision/searchSubdivisionOne',
             data : {newId : modelAttributeValue},
             success : function (data) {
-
-                console.log(data);
-                debugger;
-
+                console.log(typeof data.imageUrl);
+                console.log(data.imageUrl);
+                if(data.imageUrl.length > 0){
+                    $('#resultImg').attr('src', data.imageUrl[0]);
+                }
                 for(let i = 0; i < Object.keys(data).length; i++) {
                     const inputName = Object.keys(data)[i];
                     if (inputName === 'recWeight') {
