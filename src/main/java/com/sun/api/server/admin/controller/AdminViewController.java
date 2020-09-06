@@ -146,4 +146,12 @@ public class AdminViewController {
         return "inQuireServiceList";
     }
 
+    @RequestMapping(value="/inQuireDetailView/{id}")
+    public String inQuireDetailView(@PathVariable String id, Model model){
+        log.info("inQuireDetailView  View ---");
+        log.info(id);
+        model.addAttribute("inQuireId", id);
+        return "inQuireDetailView";
+    }
+
 }

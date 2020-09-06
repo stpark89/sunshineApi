@@ -166,17 +166,13 @@
 
     $(document).ready(function() {
 
-        // initial
-        // $('#toggle').bootstrapToggle();
-
         var modelAttributeValue = Number([[${subdivisionId}]]);
         $('#hiddenId').val(modelAttributeValue);
         $.ajax({
             url : '/subdivision/searchSubdivisionOne',
             data : {newId : modelAttributeValue},
             success : function (data) {
-                console.log(typeof data.imageUrl);
-                console.log(data.imageUrl);
+                // 이거 수정 해야함.
                 if(data.imageUrl.length > 0){
                     $('#resultImg').attr('src', data.imageUrl[0]);
                 }
