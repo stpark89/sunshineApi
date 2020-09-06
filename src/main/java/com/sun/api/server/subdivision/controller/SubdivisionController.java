@@ -1,5 +1,7 @@
 package com.sun.api.server.subdivision.controller;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sun.api.server.subdivision.service.SubdivisionService;
 import com.sun.api.server.subdivision.vo.SubdivisionVo;
@@ -47,7 +50,14 @@ public class SubdivisionController {
     @RequestMapping(value="/searchSubdivisionOne")
 	public Optional<SubdivisionVo> searchSubdivisionOne(String newId){
         log.info("searchSubdivisionOne");
-        return subdivisionService.searchSubdivisionVoOne(Long.parseLong(newId));
+        List<String> imgList = new ArrayList<String>();
+        for (File info : new File("Users/inina/subdivision/"+newId).listFiles()) {
+        	imgList.add(info.getPath());
+        }
+        //imageUrl
+        Optional<SubdivisionVo> returnVo = subdivisionService.searchSubdivisionVoOne(Long.parseLong(newId));
+        returnVo.get().setImageUrl(imgList);
+        return returnVo;
     }
 
     /**
@@ -69,10 +79,10 @@ public class SubdivisionController {
      * @param subdivisionVo
      */
     @RequestMapping(value="/saveSubdivision")
-	public Object saveSubdivision(SubdivisionVo subdivisionVo){
+	public Object saveSubdivision(SubdivisionVo subdivisionVo, MultipartFile file){
         log.info("saveSubdivision");
         try {
-            subdivisionService.saveSubdivisionVo(subdivisionVo);
+            subdivisionService.saveSubdivisionVo(subdivisionVo, file);
         }catch (Exception e){
             e.printStackTrace();
         }
