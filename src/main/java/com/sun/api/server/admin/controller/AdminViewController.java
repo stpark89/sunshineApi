@@ -116,6 +116,24 @@ public class AdminViewController {
         log.info("subDivisionView");
         return "subDivisionView";
     }
+    // 발전소 분양 상세
+    @RequestMapping(value="/subdivisionDetailView/{id}")
+    public String subdivisionDetailView(@PathVariable String id, Model model){
+        log.info("subdivisionDetailView  View ---");
+        log.info(id);
+        model.addAttribute("subdivisionId", id);
+        return "subdivisionDetailView";
+    }
 
+
+    /**
+     * 발전소 분양 등록페이지
+     * @return
+     */
+    @RequestMapping(value="/subdivisionWriteForm")
+    public String subdivisionWriteForm(){
+        log.info("subdivisionWriteForm");
+        return "subDivisionWriteView";
+    }
 
 }

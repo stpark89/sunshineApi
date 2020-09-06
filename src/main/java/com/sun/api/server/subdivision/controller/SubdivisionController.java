@@ -3,6 +3,9 @@ package com.sun.api.server.subdivision.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.sun.api.server.subdivision.vo.SubdivisionRequestVo;
+import com.sun.api.server.trade.vo.TradeRequestVo;
+import com.sun.api.server.trade.vo.TradeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +16,7 @@ import com.sun.api.server.subdivision.service.SubdivisionService;
 import com.sun.api.server.subdivision.vo.SubdivisionVo;
 
 import lombok.extern.java.Log;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Log
 @CrossOrigin(origins = "*")
@@ -37,30 +41,48 @@ public class SubdivisionController {
     }
     /**
      * 발전소 분양 단건 조회 
-     * @param id
+     * @param newId
      * @return
      */
     @RequestMapping(value="/searchSubdivisionOne")
-	public Optional<SubdivisionVo> searchSubdivisionOne(@RequestBody long id){
+	public Optional<SubdivisionVo> searchSubdivisionOne(String newId){
         log.info("searchSubdivisionOne");
-        return subdivisionService.searchSubdivisionVoOne(id);
-        
+        return subdivisionService.searchSubdivisionVoOne(Long.parseLong(newId));
     }
-    
+
+    /**
+     * 리액트 호출
+     * @param vo
+     * @return
+     */
+    @RequestMapping(value="/frontSearchSubdivisionOne")
+    public Optional<SubdivisionVo> frontSearchSubdivisionOne(@RequestBody SubdivisionRequestVo vo){
+        log.info("frontSearchSubdivisionOne : "+vo.getNewId());
+        return subdivisionService.searchSubdivisionVoOne(Long.parseLong(vo.getNewId()));
+    }
+
+
+
+
     /**
      * 발전소 분양 수정 저장 
-     * @param SubdivisionVo
+     * @param subdivisionVo
      */
     @RequestMapping(value="/saveSubdivision")
-	public void saveSubdivision(@RequestBody SubdivisionVo subdivisionVo){
+	public Object saveSubdivision(SubdivisionVo subdivisionVo){
         log.info("saveSubdivision");
-        subdivisionService.saveSubdivisionVo(subdivisionVo);
+        try {
+            subdivisionService.saveSubdivisionVo(subdivisionVo);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new RedirectView("/admin/subdivisionView");
         
     }    
     
     /**
      * 발전소 분양 삭제 
-     * @param SubdivisionVo
+     * @param subdivisionVo
      */
     @RequestMapping(value="/deleteSubdivision")
 	public void deleteSubdivision(@RequestBody SubdivisionVo subdivisionVo){
