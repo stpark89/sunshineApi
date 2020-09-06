@@ -58,6 +58,15 @@ public class RecController {
         log.info("find Rec Data");
         return recService.findRecData();
     }
-    
+  
+    /**
+     * 최근 1년 지표 
+     * @return
+     */
+    @RequestMapping(value="/findIndicators")
+    public Map<String,Object> findIndicators(){
+        log.info("findIndicators");
+        return recService.findIndicators();
+    }
     
 }

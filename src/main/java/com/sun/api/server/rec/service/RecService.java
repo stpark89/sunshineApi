@@ -102,6 +102,14 @@ public class RecService {
 		}
 	}
 	
+	public Map<String, Object> findIndicators(){
+		
+		Map<String, Object> returnData = new HashMap<>();
+		returnData.put("indicators", recRepository.findIndicators());
+		returnData.put("jejuIndicators", recRepository.findJejuIndicators());
+		
+		return returnData;
+	}
 	
 	
 	private Sheet getSheet(MultipartFile file){
