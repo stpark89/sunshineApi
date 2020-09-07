@@ -73,6 +73,9 @@ public class InQuireService {
             returnMap.put("result", returnVo);
         }
 
+        // 문의 내역
+        returnMap.put("resultUser", searchVo);
+
         return returnMap;
     }
     

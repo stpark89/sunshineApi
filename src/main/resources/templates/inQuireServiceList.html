@@ -70,13 +70,13 @@
         <div class="col-sm-12 col-xs-12">
             <h5>문의내역 리스트</h5>
             <div>
-                <select class="form-control col-2 mb-2 float-right">
+                <select class="form-control col-2 mb-2 float-right" id="selectInQuireType">
                     <option value="분양">분양</option>
                     <option value="구매">구매</option>
                 </select>
             </div>
             <div class="table-responsive-sm mt-4">
-                <table class="table">
+                <table class="table table-bordered">
                     <thead>
                     <tr>
                         <th>No (문의글번호)</th>
@@ -98,11 +98,11 @@
             location.href='/admin/inQuireDetailView/'+e;
         }
 
-        $(document).ready(function() {
+        function fetchInQuireList (e) {
             $.ajax({
                 url: '/inquire/selectInQuireType',
                 data: {
-                    inquireType : '분양'
+                    inquireType : e
                 },
                 success: function (data) {
                     console.log(data);
@@ -123,6 +123,18 @@
                     $('#tbody').html(tbodyData);
                 }
             });
+        }
+
+        $(document).ready(function() {
+
+            // 처음 로딩될때 분양 정보 조회
+            fetchInQuireList('분양');
+
+            // 타입 선택 작업.
+            $('#selectInQuireType').on('change',function(){
+                fetchInQuireList($(this).val());
+            });
+
         });
 
 </script>
