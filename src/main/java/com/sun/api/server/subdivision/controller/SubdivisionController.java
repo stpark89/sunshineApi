@@ -52,7 +52,7 @@ public class SubdivisionController {
         log.info("searchSubdivisionOne");
         List<String> imgList = new ArrayList<String>();
 
-        if(new File("C:/subdivision/"+newId).exists()){
+        if(new File("Users/inina/"+newId).exists()){
             for (File info : new File("Users/inina/"+newId).listFiles()) {
                 imgList.add(info.getPath());
             }
