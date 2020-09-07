@@ -48,7 +48,7 @@ public class SubdivisionService {
 	public void saveSubdivisionVo(SubdivisionVo subdivisionVo,MultipartFile file) {
 		try {
 			if(subdivisionVo.getId() != 0L) {
-				adminService.deleteFolder("C:/subdivision/"+subdivisionVo.getId());
+				adminService.deleteFolder("Users/inina/"+subdivisionVo.getId());
 			}
 			SubdivisionVo resultVo =  subdivisionVoRepository.save(subdivisionVo);
 			String directoryPath = "C:/subdivision/"+resultVo.getId();

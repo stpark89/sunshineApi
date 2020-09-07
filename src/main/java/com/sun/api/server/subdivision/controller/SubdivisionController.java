@@ -53,7 +53,7 @@ public class SubdivisionController {
         List<String> imgList = new ArrayList<String>();
 
         if(new File("C:/subdivision/"+newId).exists()){
-            for (File info : new File("C:/subdivision/"+newId).listFiles()) {
+            for (File info : new File("Users/inina/"+newId).listFiles()) {
                 imgList.add(info.getPath());
             }
         }
