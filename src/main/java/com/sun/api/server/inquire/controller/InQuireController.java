@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Log
 @CrossOrigin(origins = "*")
@@ -47,9 +49,20 @@ public class InQuireController {
      * @return
      */
     @RequestMapping(value="/selectInQuireType")
-    public List<InQuireVo> selectInQuireType(@RequestBody InQuireVo vo){
+    public List<InQuireVo> selectInQuireType(InQuireVo vo){
         log.info("inquire.selectInQuireType");
+        System.out.println(vo.toString());
+
         return inquireService.selectInQuireType(vo);
+    }
+
+    @RequestMapping(value="/selectInQuireDetailInfo")
+    public Map<String, Object> selectInQuireDetailInfo(InQuireVo vo){
+        log.info("데이터 확인중 ----");
+        Map<String, Object> returnMap = new HashMap<>();
+
+        returnMap = inquireService.selectInQuireDetailInfo(vo);
+        return returnMap;
     }
     
 

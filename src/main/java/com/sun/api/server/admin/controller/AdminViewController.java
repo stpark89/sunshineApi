@@ -146,4 +146,18 @@ public class AdminViewController {
         return "inQuireServiceList";
     }
 
+    /**
+     * 문의하기 상세조회
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="/inQuireDetailView/{id}")
+    public String inQuireDetailView(@PathVariable String id, Model model){
+        log.info("inQuireDetailView  View ---");
+        log.info(id);
+        model.addAttribute("inQuireId", id);
+        return "inQuireDetailView";
+    }
+
 }
