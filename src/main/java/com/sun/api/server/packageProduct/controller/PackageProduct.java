@@ -41,5 +41,4 @@ public class PackageProduct {
         }
         return new RedirectView("/admin/packageList");
     }
-
 }
