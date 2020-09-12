@@ -43,16 +43,20 @@ public class SubdivisionService {
 	
 	/**
 	 * 발전소 분양 수정, 저장 
-	 * @param SubdivisionVo
+	 * @param subdivisionVo, file
 	 */
 	public void saveSubdivisionVo(SubdivisionVo subdivisionVo,MultipartFile file) {
 		try {
 			if(subdivisionVo.getId() != 0L) {
-				adminService.deleteFolder("Users/inina/"+subdivisionVo.getId());
+				adminService.deleteFolder("/Users/inina/"+subdivisionVo.getId());
 			}
 			SubdivisionVo resultVo =  subdivisionVoRepository.save(subdivisionVo);
-			String directoryPath = "C:/subdivision/"+resultVo.getId();
+
+			// String directoryPath = "C:/subdivision/"+resultVo.getId();
+
+			String directoryPath = "/Users/inina/"+resultVo.getId();
 			adminService.saveFiole(file, directoryPath);
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}

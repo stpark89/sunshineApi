@@ -160,4 +160,24 @@ public class AdminViewController {
         return "inQuireDetailView";
     }
 
+    /**
+     * 패키지 상품 리스트 뷰
+     * @return
+     */
+    @RequestMapping(value="/packageList")
+    public String packageList(){
+        log.info("PackageList");
+        return "packageListView";
+    }
+
+    /**
+     * 패키지 상품 조회 페이지
+     * @return
+     */
+    @RequestMapping(value="/writePackageProduct")
+    public String writePackageProduct(){
+        log.info("/writePackageProduct");
+        return "packageProductWriteView";
+    }
+
 }
