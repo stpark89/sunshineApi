@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * 패키지 상품 Vo
+ */
 @Data
 @Entity
 public class PackageProductVo {
@@ -22,7 +25,7 @@ public class PackageProductVo {
     // 기준용량
     private Double kw;
 
-    // 모듈 아이디 
+    // 모듈 아이디
     private long moduleId;
     //모듈 제조사
     private String moduleManufacturer;
