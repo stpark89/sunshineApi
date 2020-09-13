@@ -60,7 +60,7 @@ public class ModuleController {
 	
 	@RequestMapping(value="/saveModule")
 	public void saveModule(){
-       // moduleService.saveModule();
+        moduleService.saveModule();
     }
 	
 	@RequestMapping(value="/findByModuleGroup")
