@@ -1,6 +1,7 @@
 package com.sun.api.server.inquire.service;
 
 import com.sun.api.server.inquire.repository.InQuireRepository;
+import com.sun.api.server.inquire.vo.InQuirePlantVo;
 import com.sun.api.server.inquire.vo.InQuireVo;
 import com.sun.api.server.subdivision.service.SubdivisionService;
 import com.sun.api.server.subdivision.vo.SubdivisionVo;
@@ -44,7 +45,7 @@ public class InQuireService {
             return "fail";
         }
     }
-    
+
     public List<InQuireVo> selectAllInQuire(){
     	return repository.findAll();
     }

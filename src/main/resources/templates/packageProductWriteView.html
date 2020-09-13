@@ -103,10 +103,12 @@
                         </td>
                         <th>인버터 명</th>
                         <td>
-                            <input type="text" class="form-control" name="inverterProductName" id="selectInverterProductName">
+                            <input type="text" disabled class="form-control" name="inverterProductName" id="selectInverterProductName">
                         </td>
                     </tr>
                 </table>
+                <!--인버터 로고 이미지 url-->
+                <input type="hidden" name="inverterImageUrl" id="inverterImageUrl">
                 <div style="text-align: right">
                     <button type="submit" class="btn btn-info">상품등록</button>
                 </div>
@@ -114,6 +116,67 @@
         </div>
     </div>
 </div>
+
+<script>
+
+
+
+    $(document).ready(function(){
+        let inverterList = [];
+
+        $.ajax({
+            url : '/module/searchInverter',
+            success : function(data){
+                if(data.length > 0){
+                    // 인버터 리스트
+                    inverterList = [...data];
+                    let inverterTag = '<option value="">선택</option>';
+                    data.forEach((v) => {
+                        inverterTag += `<option value=${v.id}>${v.manufacturer}(${v.outputCapacity})</option>`;
+                    });
+                    $('#selectInverterManufacturer').html(inverterTag);
+                }else{
+                    $('#selectInverterManufacturer').html('<option value=""></option>');
+                }
+            }
+        });
+
+
+        // 인버터명 수정 작업 진행시
+        $('#selectInverterManufacturer').on('change', function(){
+            const selectedValue = inverterList.filter((v) => v.id === Number($(this).val()));
+            if(selectedValue.length > 0){
+                // input value
+                $('#selectInverterProductName').val(selectedValue[0].productName);
+
+                // 히든으로 이미지 url 값 맞춰줘야함.
+                if(selectedValue[0].manufacturer === '현대중공업그린에너지'){
+                    $('#inverterImageUrl').val('/img/temp/hyunda.png');
+                }else if(selectedValue[0].manufacturer === '효성중공업'){
+                    debugger;
+                }else if(selectedValue[0].manufacturer === '금비전자'){
+                    debugger;
+                }else if(selectedValue[0].manufacturer === '다쓰테크'){
+                    debugger;
+                }else if(selectedValue[0].manufacturer === '동양이엔피') {
+                    debugger;
+                }else if(selectedValue[0].manufacturer === '썬그로우') {
+                    debugger;
+                }else if(selectedValue[0].manufacturer === '신성') {
+                    debugger;
+                }else if(selectedValue[0].manufacturer === '카코') {
+                    debugger;
+                }else if(selectedValue[0].manufacturer === '델타') {
+                    debugger;
+                }
+            }else{
+                alert('에러 발생');
+                $('#selectInverterProductName').val('');
+            }
+        });
+    });
+
+</script>
 
 
 

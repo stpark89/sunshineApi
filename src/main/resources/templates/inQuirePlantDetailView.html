@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font: 400 15px Lato, sans-serif;
+            line-height: 1.8;
+            color: #818181;
+        }
+        h2 {
+            font-size: 24px;
+            text-transform: uppercase;
+            color: #303030;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+        h4 {
+            font-size: 19px;
+            line-height: 1.375em;
+            color: #303030;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+        .jumbotron {
+            background-color: #f4511e;
+            color: #fff;
+            padding: 100px 25px;
+            font-family: Montserrat, sans-serif;
+        }
+        .container-fluid {
+            padding: 60px 50px;
+        }
+        .bg-grey {
+            background-color: #f6f6f6;
+        }
+        .logo-small {
+            color: #f4511e;
+            font-size: 50px;
+        }
+        .logo {
+            color: #f4511e;
+            font-size: 200px;
+        }
+        .customTable th { text-align: center; background-color: #f5f5f5; color: #303030 }
+    </style>
+</head>
+<body>
+<div class="container-fluid" style="padding:0">
+    <div class="row">
+        <div class="col-sm-12">
+            <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                <!-- Brand -->
+                <a class="navbar-brand" href="/">관리자 페이지</a>
+
+                <!-- Toggler/collapsibe Button -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid text-center">
+    <div class="row" style="width:1080px; margin: 0 auto;">
+        <div class="col-sm-12 col-xs-12">
+            <h5>발전소 매각 문의 상세내역</h5>
+            <div class="table-responsive-sm">
+                <table class="table table-bordered customTable">
+                    <tr>
+                        <th>발전소주소</th>
+                        <td colspan="3" id="location"></td>
+                    </tr>
+                    <tr>
+                        <th>사업주명</th>
+                        <td id="name"></td>
+                        <th>연락처</th>
+                        <td id="phone"></td>
+                    </tr>
+                    <tr>
+                        <th>발전시작일</th>
+                        <td colspan="3" id="developmentStartMonth"></td>
+                    </tr>
+                    <tr>
+                        <th>모니터링 여부</th>
+                        <td id="monitering"></td>
+                        <th>매각형태</th>
+                        <td id="saleForm"></td>
+                    </tr>
+                    <tr>
+                        <th>사업용량</th>
+                        <td id="kw"></td>
+                        <th>전력계약형태</th>
+                        <td id="powerContractType"></td>
+                    </tr>
+                    <tr>
+                        <th>모듈</th>
+                        <td id="module"></td>
+                        <th>모듈량 용량</th>
+                        <td id="moduleKW"></td>
+                    </tr>
+                    <tr>
+                        <th>인버터</th>
+                        <td id="inverter"></td>
+                        <th>인버터 용량</th>
+                        <td id="inverterKW"></td>
+                    </tr>
+                    <tr>
+                        <th>희망금</th>
+                        <td colspan="3" id="price"></td>
+                    </tr>
+                    <tr>
+                        <th>대출금액</th>
+                        <td colspan="3" id="loan"></td>
+                    </tr>
+                    <tr>
+                        <th>문의 내용</th>
+                        <td colspan="3">
+                            <textarea id="content" class="form-control" disabled rows="5" cols="5">
+
+                            </textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+
+    $(document).ready(function() {
+
+        var modelAttributeValue = Number([[${inQuireId}]]);
+        $.ajax({
+            url: '/inquirePlant/selectPlantInQuireDetailInfo',
+            data: {
+                id : modelAttributeValue
+            },
+            success : function (data) {
+
+                // 주소
+                $('#location').text(data.location);
+                $('#name').text(data.name);
+                $('#phone').text(data.phone);
+                $('#developmentStartMonth').text(data.developmentStartMonth);
+
+                if(data.monitering){
+                    $('#monitering').text('유');
+                }else{
+                    $('#monitering').text('무');
+                }
+
+                if(data.saleForm === true){
+                    $('#saleForm').text('운영중 발전소');
+                }else{
+                    $('#saleForm').text('사업부지');
+                }
+
+                $('#kw').text(data.kw);
+                $('#powerContractType').text(data.powerContractType);
+
+                $('#module').text(data.module);
+                $('#moduleKW').text(data.moduleKW);
+
+                $('#inverter').text(data.inverter);
+                $('#inverterKW').text(data.inverterKW);
+
+                $('#price').text(data.price);
+                $('#loan').text(data.loan);
+
+                $('#content').val(data.content);
+            }
+        });
+
+    });
+
+    /*]]>*/
+</script>
+
+</body>
+</html>

@@ -30,6 +30,11 @@ public class PackageProduct {
         return packageProductService.fetchPackageProductList();
     }
 
+    /**
+     * 패키지 상품 등록하기
+     * @param packageProductVo
+     * @return
+     */
     @RequestMapping(value="/savePackageProduct")
     public Object savePackageProduct(PackageProductVo packageProductVo){
         log.info("savePackageProduct");

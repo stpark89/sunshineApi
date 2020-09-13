@@ -56,6 +56,11 @@ public class InQuireController {
         return inquireService.selectInQuireType(vo);
     }
 
+    /**
+     * 문의내역 상세 조회
+     * @param vo
+     * @return
+     */
     @RequestMapping(value="/selectInQuireDetailInfo")
     public Map<String, Object> selectInQuireDetailInfo(InQuireVo vo){
         log.info("데이터 확인중 ----");
