@@ -71,7 +71,7 @@
     <div class="row" style="width:1080px; margin: 0 auto;">
         <div class="col-sm-12">
             <h5 class="mt-2">발전소 구매 정보</h5>
-            <form action="/trade/saveTrade" method="post">
+            <form action="/trade/saveTrade" method="post" enctype="multipart/form-data">
                 <div class="table-responsive-sm">
                     <table class="table">
                         <tr>
@@ -140,6 +140,12 @@
                             <td><input type="text" class="form-control tradeInfo" name="remainsLoanCost"></td>
                             <th>토지면적</th>
                             <td><input type="text" class="form-control tradeInfo" name="landExten"></td>
+                        </tr>
+                        <tr>
+                            <th>대표 이미지</th>
+                            <td colspan="3">
+                                <input type="file" name="file" class="form-control">
+                            </td>
                         </tr>
                     </table>
                     <div style="text-align: right;">

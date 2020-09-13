@@ -81,6 +81,7 @@ public class TradeService {
 				adminservice.deleteFolder("C:/Users/test/Documents/build/images/trade/"+tradeVo.getId());
 			}
 			TradeVo resultVo =  tradeVoRepository.save(tradeVo);
+;
 			String directoryPath = "C:/Users/test/Documents/build/images/trade/"+resultVo.getId();
 			
 			adminservice.saveFiole(file, directoryPath);
