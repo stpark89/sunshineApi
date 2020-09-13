@@ -40,8 +40,17 @@ public class TradeController {
 	public List<TradeVo> searchTrade(){
 		log.info("searchTrade");
 		return tradeService.searchTradeVo();
-
 	}
+
+	/**
+	 * 프론트 발전소 매매 전체 조회
+	 */
+	@RequestMapping(value="/fetchFrontSearchTrade")
+	public List<TradeVo> fetchFrontSearchTrade(){
+		log.info("fetchFrontSearchTrade");
+		return tradeService.fetchFrontSearchTrade();
+	}
+
 	/**
 	 * 발전소 매매 단건 조회 
 	 * @param newId

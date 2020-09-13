@@ -1,5 +1,7 @@
 package com.sun.api.server.subdivision.service;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sun.api.server.admin.service.AdminService;
 import com.sun.api.server.subdivision.repository.SubdivisionVoRepository;
 import com.sun.api.server.subdivision.vo.SubdivisionVo;
-import com.sun.api.server.trade.vo.TradeVo;
 
 import lombok.extern.java.Log;
 
@@ -33,12 +34,45 @@ public class SubdivisionService {
 	}
 
 	/**
+	 * 발전소 분양 전체 조회
+	 * @return
+	 */
+	public List<SubdivisionVo> searchFrontSubdivision(){
+		log.info("searchFrontSubdivision");
+		List<SubdivisionVo>  list = subdivisionVoRepository.findAll();
+
+		for(int i = 0; i < list.size() ; i++){
+			if(new File("C:/Users/test/Documents/build/images/subdivision/"+list.get(i).getId()).exists()){
+				List<String> imgList = new ArrayList<String>();
+				for (File info : new File("C:/Users/test/Documents/build/images/subdivision/"+list.get(i).getId()).listFiles()) {
+					System.out.println("파일 확인중 --------------");
+					log.info(info.getName());
+					imgList.add("/images/subdivision/"+list.get(i).getId()+"/"+info.getName());
+				}
+				list.get(i).setImageUrl(imgList);
+			}
+		}
+
+		return list;
+	}
+
+	/**
 	 * 발전소 분양 단건 조회 
 	 * @param id
 	 * @return
 	 */
 	public Optional<SubdivisionVo> searchSubdivisionVoOne(long id){
-		return subdivisionVoRepository.findById(id);
+
+		Optional<SubdivisionVo> vo = subdivisionVoRepository.findById(id);
+		if(new File("C:/Users/test/Documents/build/images/subdivision/"+vo.get().getId()).exists()) {
+			List<String> imgList = new ArrayList<String>();
+			for(File info : new File("C:/Users/test/Documents/build/images/subdivision/"+vo.get().getId()).listFiles()){
+				imgList.add("/images/subdivision/"+vo.get().getId()+"/"+info.getName());
+			}
+			vo.get().setImageUrl(imgList);
+		}
+
+		return vo;
 	}
 	
 	/**
@@ -66,7 +100,7 @@ public class SubdivisionService {
 
 	/**
 	 * 발전소 분양 삭제 
-	 * @param SubdivisionVo
+	 * @param subdivisionVo
 	 */
 	public void deleteSubdivisionVo(SubdivisionVo subdivisionVo) {
 		subdivisionVoRepository.delete(subdivisionVo);

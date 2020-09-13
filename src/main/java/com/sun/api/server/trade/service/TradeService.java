@@ -1,8 +1,11 @@
 package com.sun.api.server.trade.service;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.sun.api.server.subdivision.vo.SubdivisionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,12 +35,40 @@ public class TradeService {
 	}
 
 	/**
+	 * 발전소 매매 - 프론트 요청 조회
+	 * @return
+	 */
+	public List<TradeVo> fetchFrontSearchTrade(){
+		log.info("fetchFrontSearchTrade");
+		List<TradeVo> tradeVoList = tradeVoRepository.findAll();
+		for(int i = 0; i < tradeVoList.size() ; i++){
+			if(new File("C:/Users/test/Documents/build/images/trade/"+tradeVoList.get(i).getId()).exists()){
+				List<String> imgList = new ArrayList<String>();
+				for (File info : new File("C:/Users/test/Documents/build/images/trade/"+tradeVoList.get(i).getId()).listFiles()) {
+					imgList.add("/images/trade/"+tradeVoList.get(i).getId()+"/"+info.getName());
+				}
+				tradeVoList.get(i).setImageUrl(imgList);
+			}
+		}
+		return tradeVoList;
+	}
+
+	/**
 	 * 발전소 매매 단건 조회 
 	 * @param id
 	 * @return
 	 */
 	public Optional<TradeVo> searchTradeVoOne(long id){
-		return tradeVoRepository.findById(id);
+		log.info("searchTradeVoOne");
+		Optional<TradeVo> vo = tradeVoRepository.findById(id);
+		if(new File("C:/Users/test/Documents/build/images/trade/"+vo.get().getId()).exists()) {
+			List<String> imgList = new ArrayList<String>();
+			for(File info : new File("C:/Users/test/Documents/build/images/trade/"+vo.get().getId()).listFiles()){
+				imgList.add("/images/trade/"+vo.get().getId()+"/"+info.getName());
+			}
+			vo.get().setImageUrl(imgList);
+		}
+		return vo;
 	}
 	
 	/**

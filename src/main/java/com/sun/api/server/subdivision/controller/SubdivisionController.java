@@ -40,8 +40,17 @@ public class SubdivisionController {
 	public List<SubdivisionVo> searchSubdivision(){
         log.info("searchSubdivision");
         return subdivisionService.searchSubdivisionVo();
-        
     }
+
+    /**
+     * 프론트용 발전소 분양 조회
+     */
+    @RequestMapping(value ="/searchFrontSubdivision")
+    public List<SubdivisionVo> searchFrontSubdivision(){
+        log.info("searchFrontSubdivision !! ");
+        return subdivisionService.searchFrontSubdivision();
+    }
+
     /**
      * 발전소 분양 단건 조회 
      * @param newId
@@ -53,11 +62,12 @@ public class SubdivisionController {
         List<String> imgList = new ArrayList<String>();
         if(new File("C:/Users/test/Documents/build/images/subdivision/"+newId).exists()){
             for (File info : new File("C:/Users/test/Documents/build/images/subdivision/"+newId).listFiles()) {
+                System.out.println("파일 확인중 --------------");
+                log.info(info.getName());
+
                 imgList.add(info.getPath());
             }
         }
-
-
         //imageUrl
         Optional<SubdivisionVo> returnVo = subdivisionService.searchSubdivisionVoOne(Long.parseLong(newId));
         returnVo.get().setImageUrl(imgList);
