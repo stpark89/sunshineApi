@@ -58,5 +58,10 @@ public class ModuleController {
         moduleService.saveInverter();
     }
 	
+	@RequestMapping(value="/saveModule")
+	public void saveModule(){
+        moduleService.saveModule();
+    }
+	
 	
 }

@@ -31,7 +31,7 @@ public class ModuleInfoVo {
     private double openCircuitVoltage;
 
     //6.직렬
-    private int sirial;
+    //private int sirial;
 
     //7.단락전류
     private double shortCircuitCurrent;
@@ -46,7 +46,7 @@ public class ModuleInfoVo {
     private String moduleSize;
 
     //11.모듈무게
-    private String moduleWeight;
+    private double moduleWeight;
 
     //12.제품보증(년)
     private int productWarranty;
@@ -66,5 +66,53 @@ public class ModuleInfoVo {
     //17.비고
     private String bigo;
 
+    //KW
+    private int kw;
+    
+    //직렬 
+    private int serial;
+    
+    //병렬 
+    private int parallel;
+    
+    //용량 
+    private double capacity;
+    
+    //합계용량 
+    private double totalCapacity;
+
+	public ModuleInfoVo(String manufacturer, String moduleKind, String productName, int maximumPower,
+			double openCircuitVoltage, double shortCircuitCurrent, double efficiency, int systemVoltage,
+			String moduleSize, double moduleWeight, int productWarranty, String outputWarranty, int wpUnitPrice,
+			int kw, int serial, int parallel,
+			double capacity, double totalCapacity, int moudlePurchaseUnitPrice, int moudleSaleUnitPrice, String bigo) {
+		super();
+		this.manufacturer = manufacturer;
+		this.moduleKind = moduleKind;
+		this.productName = productName;
+		this.maximumPower = maximumPower;
+		this.openCircuitVoltage = openCircuitVoltage;
+		//this.sirial = sirial;
+		this.shortCircuitCurrent = shortCircuitCurrent;
+		this.efficiency = efficiency;
+		this.systemVoltage = systemVoltage;
+		this.moduleSize = moduleSize;
+		this.moduleWeight = moduleWeight;
+		this.productWarranty = productWarranty;
+		this.outputWarranty = outputWarranty;
+		this.wpUnitPrice = wpUnitPrice;
+		this.kw = kw;
+		this.serial = serial;
+		this.parallel = parallel;
+		this.capacity = capacity;
+		this.totalCapacity = totalCapacity;
+		this.moudlePurchaseUnitPrice = moudlePurchaseUnitPrice;
+		this.moudleSaleUnitPrice = moudleSaleUnitPrice;
+		this.bigo = bigo;
+	}
+    
+    
+    
+    
 
 }
