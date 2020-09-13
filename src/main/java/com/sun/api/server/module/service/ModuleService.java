@@ -56,6 +56,14 @@ public class ModuleService {
 	}
 	
 	/**
+	 * 모듈 목록 조회 (제조사, 모듈이름) 
+	 * @return
+	 */
+	public List<ModuleInfoVo> findByModuleGorup(){
+		return moduleInfoVoRepository.findByModuleGorup();
+		
+	}
+	/**
 	 * 인버터 데이터 저장 임시 
 	 */
 	public void saveInverter() {

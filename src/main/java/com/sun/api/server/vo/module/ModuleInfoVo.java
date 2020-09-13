@@ -81,7 +81,11 @@ public class ModuleInfoVo {
     //합계용량 
     private double totalCapacity;
 
-	public ModuleInfoVo(String manufacturer, String moduleKind, String productName, int maximumPower,
+    public ModuleInfoVo() {
+    	
+    }
+	
+    public ModuleInfoVo(String manufacturer, String moduleKind, String productName, int maximumPower,
 			double openCircuitVoltage, double shortCircuitCurrent, double efficiency, int systemVoltage,
 			String moduleSize, double moduleWeight, int productWarranty, String outputWarranty, int wpUnitPrice,
 			int kw, int serial, int parallel,
@@ -110,9 +114,38 @@ public class ModuleInfoVo {
 		this.moudleSaleUnitPrice = moudleSaleUnitPrice;
 		this.bigo = bigo;
 	}
-    
-    
-    
-    
+
+	public ModuleInfoVo(long id, String manufacturer, String moduleKind, String productName, int maximumPower,
+			double openCircuitVoltage, double shortCircuitCurrent, double efficiency, int systemVoltage,
+			String moduleSize, double moduleWeight, int productWarranty, String outputWarranty, int wpUnitPrice,
+			int moudlePurchaseUnitPrice, int moudleSaleUnitPrice, String bigo, int kw, int serial, int parallel,
+			double capacity, double totalCapacity) {
+		super();
+		this.id = id;
+		this.manufacturer = manufacturer;
+		this.moduleKind = moduleKind;
+		this.productName = productName;
+		this.maximumPower = maximumPower;
+		this.openCircuitVoltage = openCircuitVoltage;
+		this.shortCircuitCurrent = shortCircuitCurrent;
+		this.efficiency = efficiency;
+		this.systemVoltage = systemVoltage;
+		this.moduleSize = moduleSize;
+		this.moduleWeight = moduleWeight;
+		this.productWarranty = productWarranty;
+		this.outputWarranty = outputWarranty;
+		this.wpUnitPrice = wpUnitPrice;
+		this.moudlePurchaseUnitPrice = moudlePurchaseUnitPrice;
+		this.moudleSaleUnitPrice = moudleSaleUnitPrice;
+		this.bigo = bigo;
+		this.kw = kw;
+		this.serial = serial;
+		this.parallel = parallel;
+		this.capacity = capacity;
+		this.totalCapacity = totalCapacity;
+	}
+   
+
+ 
 
 }
