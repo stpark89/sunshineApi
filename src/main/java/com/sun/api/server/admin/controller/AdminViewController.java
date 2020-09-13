@@ -145,7 +145,6 @@ public class AdminViewController {
         log.info("inQuireServiceList");
         return "inQuireServiceList";
     }
-
     /**
      * 문의하기 상세조회
      * @param id
@@ -159,6 +158,29 @@ public class AdminViewController {
         model.addAttribute("inQuireId", id);
         return "inQuireDetailView";
     }
+
+
+    /**
+     * 발전소 매각 문의하기 페이지.
+     */
+    @RequestMapping(value="/inQuirePlantListView")
+    public String inQuirePlantList(){
+        log.info("inQuirePlantListView");
+        return "inQuirePlantListView";
+    }
+
+    /**
+     * 발전소 매각 상세보기 페이지.
+     */
+    @RequestMapping(value="/inQuirePlantDetailView/{id}")
+    public String inQuirePlantDetailView(@PathVariable String id, Model model){
+        log.info("inQuirePlantDetailView  View ---");
+        log.info(id);
+        model.addAttribute("inQuireId", id);
+        return "inQuirePlantDetailView";
+    }
+
+
 
     /**
      * 패키지 상품 리스트 뷰

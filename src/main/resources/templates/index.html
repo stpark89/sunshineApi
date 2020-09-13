@@ -98,7 +98,6 @@
     </div>
     <br><br>
     <div class="row" style="max-width:1200px; margin: 0 auto;">
-
         <div class="col-sm-4" id="trade" style="padding:25px;">
             <div style="background: #ffffff; border-radius: 5px; box-shadow: 1px 1px 5px rgba(0,0,0,0.5); padding:15px;">
                 <i class="fas fa-receipt" style="font-size: 32px;"></i>
@@ -106,6 +105,20 @@
                 <p>발전소 구매 정보</p>
             </div>
         </div>
+        <div class="col-sm-4" id="packageList" style="padding:25px;">
+            <div style="background: #ffffff; border-radius: 5px; box-shadow: 1px 1px 5px rgba(0,0,0,0.5); padding:15px;">
+                <i class="fas fa-receipt" style="font-size: 32px;"></i>
+                <h4>패키지</h4>
+                <p>패키지 상품 조회 및 등록</p>
+            </div>
+        </div>
+        <div class="col-sm-4" style="padding:25px;">
+            <div style="background: #ffffff; border-radius: 5px; box-shadow: 1px 1px 5px rgba(0,0,0,0.5); padding:15px;">
+
+            </div>
+        </div>
+    </div>
+    <div class="row" style="max-width:1200px; margin: 0 auto;">
         <div class="col-sm-4" id="inQuire" style="padding:25px;">
             <div style="background: #ffffff; border-radius: 5px; box-shadow: 1px 1px 5px rgba(0,0,0,0.5); padding:15px;">
                 <i class="fas fa-receipt" style="font-size: 32px;"></i>
@@ -113,11 +126,11 @@
                 <p>분양, 구매 문의내역 정보조회.</p>
             </div>
         </div>
-        <div class="col-sm-4" id="packageList" style="padding:25px;">
+        <div class="col-sm-4" id="inQuirePlant" style="padding:25px;">
             <div style="background: #ffffff; border-radius: 5px; box-shadow: 1px 1px 5px rgba(0,0,0,0.5); padding:15px;">
                 <i class="fas fa-receipt" style="font-size: 32px;"></i>
-                <h4>패키지</h4>
-                <p>패키지 상품 조회 및 등록</p>
+                <h4>발전소 매각</h4>
+                <p>매각 문의내역 정보조회.</p>
             </div>
         </div>
     </div>
@@ -141,8 +154,14 @@
             location.href='/admin/subdivisionView';
         });
 
+        // 문의하기 - 발전소 구매 . 매매
         $('#inQuire').on('click', function(){
             location.href='/admin/inQuireServiceList'
+        });
+
+        // 문의하기 - 발전소 매각
+        $('#inQuirePlant').on('click', function(){
+            location.href='/admin/inQuirePlantListView'
         });
 
 

@@ -92,7 +92,7 @@
                                 <option value=""></option>
                             </select>
                         <th>모듈명</th>
-                        <td><input type="number" step="any" class="form-control tradeInfo" name="moduleProductName"></td>
+                        <td><input type="text" readonly class="form-control tradeInfo" name="moduleProductName"></td>
                     </tr>
                     <tr>
                         <th>인버터 제조사</th>
@@ -103,10 +103,12 @@
                         </td>
                         <th>인버터 명</th>
                         <td>
-                            <input type="text" class="form-control" name="inverterProductName" id="selectInverterProductName">
+                            <input type="text" readonly class="form-control" name="inverterProductName" id="selectInverterProductName">
                         </td>
                     </tr>
                 </table>
+                <!--인버터 로고 이미지 url-->
+                <input type="hidden" name="inverterImageUrl" id="inverterImageUrl">
                 <div style="text-align: right">
                     <button type="submit" class="btn btn-info">상품등록</button>
                 </div>
@@ -114,6 +116,69 @@
         </div>
     </div>
 </div>
+
+<script>
+
+
+
+    $(document).ready(function(){
+        let inverterList = [];
+
+        $.ajax({
+            url : '/module/searchInverter',
+            success : function(data){
+                if(data.length > 0){
+                    // 인버터 리스트
+                    inverterList = [...data];
+                    let inverterTag = '<option value="">선택</option>';
+                    data.forEach((v) => {
+                        inverterTag += `<option value=${v.id}>${v.manufacturer}(${v.outputCapacity})</option>`;
+                    });
+                    $('#selectInverterManufacturer').html(inverterTag);
+                }else{
+                    $('#selectInverterManufacturer').html('<option value=""></option>');
+                }
+            }
+        });
+
+
+        // 인버터명 수정 작업 진행시
+        $('#selectInverterManufacturer').on('change', function(){
+            const selectedValue = inverterList.filter((v) => v.id === Number($(this).val()));
+            if(selectedValue.length > 0){
+                // input value
+                $('#selectInverterProductName').val(selectedValue[0].productName);
+                console.log(selectedValue[0].productName);
+                debugger;
+
+                // 히든으로 이미지 url 값 맞춰줘야함.
+                if(selectedValue[0].manufacturer === '현대중공업그린에너지'){
+                    $('#inverterImageUrl').val('/images/invertor/hyunda.png');
+                }else if(selectedValue[0].manufacturer === '효성중공업'){
+                    $('#inverterImageUrl').val('/images/invertor/hyosung.jpg');
+                }else if(selectedValue[0].manufacturer === '금비전자'){
+                    $('#inverterImageUrl').val('/images/invertor/kumbi.png');
+                }else if(selectedValue[0].manufacturer === '다쓰테크'){
+                    $('#inverterImageUrl').val('/images/invertor/das.jpg');
+                }else if(selectedValue[0].manufacturer === '동양이엔피') {
+                    $('#inverterImageUrl').val('/images/invertor/dongyang.gif');
+                }else if(selectedValue[0].manufacturer === '썬그로우') {
+                    $('#inverterImageUrl').val('/images/invertor/sungrow.jpeg');
+                }else if(selectedValue[0].manufacturer === '신성') {
+                    $('#inverterImageUrl').val('/images/invertor/sinsung.png');
+                }else if(selectedValue[0].manufacturer === '카코') {
+                    $('#inverterImageUrl').val('/images/invertor/kako.jpg');
+                }else if(selectedValue[0].manufacturer === '델타') {
+                    $('#inverterImageUrl').val('/images/invertor/Delta.jpg');
+                }
+            }else{
+                alert('에러 발생');
+                $('#selectInverterProductName').val('');
+            }
+        });
+    });
+
+</script>
 
 
 

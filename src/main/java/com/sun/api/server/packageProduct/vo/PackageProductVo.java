@@ -21,9 +21,9 @@ public class PackageProductVo {
     // 가격
     private int price;
     // 할인율
-    private Double rateDiscount;
+    private double rateDiscount;
     // 기준용량
-    private Double kw;
+    private double kw;
 
     //모듈 제조사
     private String moduleManufacturer;
