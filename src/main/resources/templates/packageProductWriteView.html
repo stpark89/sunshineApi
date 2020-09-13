@@ -92,7 +92,7 @@
                                 <option value=""></option>
                             </select>
                         <th>모듈명</th>
-                        <td><input type="number" step="any" class="form-control tradeInfo" name="moduleProductName"></td>
+                        <td><input type="text" readonly class="form-control tradeInfo" name="moduleProductName"></td>
                     </tr>
                     <tr>
                         <th>인버터 제조사</th>
@@ -103,7 +103,7 @@
                         </td>
                         <th>인버터 명</th>
                         <td>
-                            <input type="text" disabled class="form-control" name="inverterProductName" id="selectInverterProductName">
+                            <input type="text" readonly class="form-control" name="inverterProductName" id="selectInverterProductName">
                         </td>
                     </tr>
                 </table>
@@ -148,6 +148,8 @@
             if(selectedValue.length > 0){
                 // input value
                 $('#selectInverterProductName').val(selectedValue[0].productName);
+                console.log(selectedValue[0].productName);
+                debugger;
 
                 // 히든으로 이미지 url 값 맞춰줘야함.
                 if(selectedValue[0].manufacturer === '현대중공업그린에너지'){
