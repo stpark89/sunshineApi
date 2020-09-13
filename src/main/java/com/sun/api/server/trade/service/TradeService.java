@@ -47,10 +47,10 @@ public class TradeService {
 	public void saveTradeVo(TradeVo tradeVo, MultipartFile file) {
 		try {
 			if(tradeVo.getId() != 0L) {
-				adminservice.deleteFolder("Users/inina/"+tradeVo.getId());
+				adminservice.deleteFolder("C:/Users/test/Documents/build/images/trade/"+tradeVo.getId());
 			}
 			TradeVo resultVo =  tradeVoRepository.save(tradeVo);
-			String directoryPath = "C:/subdivision/"+resultVo.getId();
+			String directoryPath = "C:/Users/test/Documents/build/images/trade/"+resultVo.getId();
 			
 			adminservice.saveFiole(file, directoryPath);
 		}catch(Exception e){

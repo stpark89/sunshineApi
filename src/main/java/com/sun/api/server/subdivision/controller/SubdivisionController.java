@@ -51,9 +51,8 @@ public class SubdivisionController {
 	public Optional<SubdivisionVo> searchSubdivisionOne(String newId){
         log.info("searchSubdivisionOne");
         List<String> imgList = new ArrayList<String>();
-
-        if(new File("Users/inina/"+newId).exists()){
-            for (File info : new File("Users/inina/"+newId).listFiles()) {
+        if(new File("C:/Users/test/Documents/build/images/subdivision/"+newId).exists()){
+            for (File info : new File("C:/Users/test/Documents/build/images/subdivision/"+newId).listFiles()) {
                 imgList.add(info.getPath());
             }
         }

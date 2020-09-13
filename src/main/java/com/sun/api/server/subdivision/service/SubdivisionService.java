@@ -48,13 +48,13 @@ public class SubdivisionService {
 	public void saveSubdivisionVo(SubdivisionVo subdivisionVo,MultipartFile file) {
 		try {
 			if(subdivisionVo.getId() != 0L) {
-				adminService.deleteFolder("/Users/inina/"+subdivisionVo.getId());
+				adminService.deleteFolder("C:/Users/test/Documents/build/images/subdivision/"+subdivisionVo.getId());
 			}
 			SubdivisionVo resultVo =  subdivisionVoRepository.save(subdivisionVo);
 
 			// String directoryPath = "C:/subdivision/"+resultVo.getId();
 
-			String directoryPath = "/Users/inina/"+resultVo.getId();
+			String directoryPath = "C:/Users/test/Documents/build/images/subdivision/"+resultVo.getId();
 			adminService.saveFiole(file, directoryPath);
 
 		}catch(Exception e){

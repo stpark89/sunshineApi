@@ -51,8 +51,8 @@ public class TradeController {
 	public Optional<TradeVo> searchTradeOne(String newId){
 		log.info("searchTradeOne"+newId);
 		List<String> imgList = new ArrayList<String>();
-		if(new File("Users/inina/"+newId).exists()) {
-			for (File info : new File("Users/inina/" + newId).listFiles()) {
+		if(new File("C:/Users/test/Documents/build/images/trade/"+newId).exists()) {
+			for (File info : new File("C:/Users/test/Documents/build/images/trade/" + newId).listFiles()) {
 				imgList.add(info.getPath());
 			}
 		}
