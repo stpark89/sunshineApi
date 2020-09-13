@@ -63,9 +63,9 @@ public class ModuleController {
        // moduleService.saveModule();
     }
 	
-	@RequestMapping(value="/findByModuleGorup")
-	public List<ModuleInfoVo> findByModuleGorup(){
-        return moduleService.findByModuleGorup();
+	@RequestMapping(value="/findByModuleGroup")
+	public List<ModuleInfoVo> findByModuleGroup(){
+        return moduleService.findByModuleGroup();
     }
 	
 }

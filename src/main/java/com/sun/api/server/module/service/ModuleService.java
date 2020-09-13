@@ -59,8 +59,8 @@ public class ModuleService {
 	 * 모듈 목록 조회 (제조사, 모듈이름) 
 	 * @return
 	 */
-	public List<ModuleInfoVo> findByModuleGorup(){
-		return moduleInfoVoRepository.findByModuleGorup();
+	public List<ModuleInfoVo> findByModuleGroup(){
+		return moduleInfoVoRepository.findByModuleGroup();
 		
 	}
 	/**
