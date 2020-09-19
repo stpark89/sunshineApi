@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface SmpRepository extends JpaRepository<SmpVo, Long> {
 
-    @Query(value = "SELECT * FROM rec_vo where division = 0 order by trade_date", nativeQuery = true)
-    List<RecVo> findBySearchSmpData();
+    @Query(value = "SELECT * FROM smp_vo where division = 0 order by term", nativeQuery = true)
+    List<SmpVo> findBySearchSmpData();
 
-    @Query(value = "SELECT * FROM rec_vo where division = 1 order by trade_date", nativeQuery = true)
-    List<RecVo> findBySearchJejuSmpData();
+    @Query(value = "SELECT * FROM smp_vo where division = 1 order by term", nativeQuery = true)
+    List<SmpVo> findBySearchJejuSmpData();
 
 }
