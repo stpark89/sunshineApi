@@ -62,6 +62,17 @@ public class DataController {
     }
 
     /**
+     * Smp Db 조회 작업
+     * @return
+     */
+    @RequestMapping(value="/selectSmpDbData")
+    public Map<String, Object> selectSmpDbData(){
+        log.info("DataController.Select Smp Data");
+        return dataService.selectSmpDbData();
+    }
+
+
+    /**
      * Smp Data 조회
      * @return
      */

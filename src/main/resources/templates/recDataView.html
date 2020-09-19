@@ -80,11 +80,29 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-9">
-            <p>데이터 조회. </p>
+        <div class="col-sm-3">
+            <div class="card bg-light text-dark">
+                <div class="card-body">
+                    <p>육지 ) Smp 정보 파일 업로드</p>
+                    <hr/>
+                    <input class="form-control" type="file" id="excelSmpFileUpload">
+                    <input class="btn btn-info mt-2" type="button" id="btnSmpFileUpload" value="파일업로드">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card bg-light text-dark">
+                <div class="card-body">
+                    <p>제주 ) Smp 정보 파일 업로드</p>
+                    <hr/>
+                    <input class="form-control" type="file" id="excelJejuSmpFileUpload">
+                    <input class="btn btn-info mt-2" type="button" id="btnJejuSmpFileUpload" value="파일업로드">
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 
 <script>
     $(document).ready(function(){
@@ -107,6 +125,47 @@
                 }
             );
         });
+
+        $('#btnSmpFileUpload').on('click', function(){
+            var formData = new FormData();
+            formData.append("file", $("#excelSmpFileUpload")[0].files[0]);
+            formData.append("division", "0");
+            $.ajax(
+                {
+                    type: 'POST',
+                    url: '/adminData/smpExcelUpload',
+                    processData: false, // 필수
+                    contentType: false, // 필수
+                    data: formData,
+                    success: function(data) {
+
+                        alert('성공');
+                        console.log(data);
+                    }
+                }
+            );
+        });
+
+        $('#btnJejuSmpFileUpload').on('click', function(){
+            var formData = new FormData();
+            formData.append("file", $("#excelJejuSmpFileUpload")[0].files[0]);
+            formData.append("division", "1");
+            $.ajax(
+                {
+                    type: 'POST',
+                    url: '/adminData/smpExcelUpload',
+                    processData: false, // 필수
+                    contentType: false, // 필수
+                    data: formData,
+                    success: function(data) {
+
+                        alert('성공');
+                        console.log(data);
+                    }
+                }
+            );
+        })
+
     });
 </script>
 

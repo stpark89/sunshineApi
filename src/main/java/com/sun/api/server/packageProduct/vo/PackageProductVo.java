@@ -27,13 +27,21 @@ public class PackageProductVo {
 
     //모듈 제조사
     private String moduleManufacturer;
+
+    // 이름 - 한화450
+    private String moduleManufacturerStringName;
+
     //모듈 품명
     private String moduleProductName;
     // 모듈 로고 - 이미지 url
     private String moduleImageUrl;
 
+
+
     // 인버터 제조사
     private String inverterManufacturer;
+    // 인버터 제조사 이름
+    private String inverterManufacturerStringName;
     // 인버터 품명
     private String inverterProductName;
     // 인버터 로고 - 이미지 url

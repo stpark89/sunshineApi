@@ -29,8 +29,8 @@ public class AdminDataController {
         log.info(file.getOriginalFilename());
         log.info("Rec 파일 업로드");
 
-        // File targetFile = new File("C:/rec/"+file.getOriginalFilename());
-        File targetFile = new File("Users/inina/"+file.getOriginalFilename());
+         File targetFile = new File("C:/rec/"+file.getOriginalFilename());
+        //File targetFile = new File("Users/inina/"+file.getOriginalFilename());
 
         try {
             InputStream fileStream = file.getInputStream();
@@ -44,6 +44,29 @@ public class AdminDataController {
         }
         
         return "Success";
+    }
+
+    /**
+     * 육지, 제주
+     * @param file
+     * @return
+     */
+    @RequestMapping(value="/smpExcelUpload")
+    public String smpExcelUpload(MultipartFile file, String division){
+        log.info("Smp 파일 업로드 : " +division);
+        File targetFile = new File("C:/smp/"+file.getOriginalFilename());
+
+        try {
+            InputStream fileStream = file.getInputStream();
+            FileUtils.copyInputStreamToFile(fileStream, targetFile);
+
+            String originalFileName = file.getOriginalFilename();
+
+            recService.saveSmpData(file, Integer.parseInt(division));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "success";
     }
 
 }

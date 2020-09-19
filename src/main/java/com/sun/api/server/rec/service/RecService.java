@@ -2,14 +2,22 @@ package com.sun.api.server.rec.service;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.sun.api.server.rec.repository.SmpRepository;
+import com.sun.api.server.vo.SmpVo;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -28,7 +36,9 @@ public class RecService {
 	@Autowired
 	RecRepository recRepository;
 
-	
+	@Autowired
+	private SmpRepository smpRepository;
+
 	public Map<String, Object> findRecData(){
 		Map<String, Object> returnData = new HashMap<>();
 		returnData.put("rec", recRepository.findBySearchRecData());
@@ -48,7 +58,7 @@ public class RecService {
 		return returnData;
 		
 	}
-	
+
 	public void saveRecData (MultipartFile file, String originalFileName)  {
 
 
@@ -101,6 +111,56 @@ public class RecService {
 			e.printStackTrace();
 		}
 	}
+
+	public void saveSmpData (MultipartFile file, int division)  {
+
+		XSSFSheet sheet = getXlsxSheet(file);
+		List<SmpVo> smpVoList = new ArrayList<>();
+
+		int rowindex=0;
+		int columnindex=0;
+		int rows=sheet.getPhysicalNumberOfRows();
+		for(rowindex=1;rowindex<rows;rowindex++){
+			//행을읽는다
+			XSSFRow row=sheet.getRow(rowindex);
+			if(row !=null){
+
+				SmpVo smpVo = new SmpVo();
+
+				//셀의 수
+				int cells=row.getPhysicalNumberOfCells();
+				for(columnindex=0;columnindex<=cells;columnindex++){
+
+					if(columnindex == 0) {
+						//셀값을 읽는다
+						XSSFCell cell=row.getCell(columnindex);
+						String value="";
+						//셀이 빈값일경우를 위한 널체크
+						if(cell==null){
+							continue;
+						}else{
+							smpVo.setTerm(cell.getStringCellValue().replaceAll("/", "-"));
+						}
+
+					}else if(columnindex == 27){
+						//셀값을 읽는다
+						XSSFCell cell=row.getCell(columnindex);
+						String value="";
+						//셀이 빈값일경우를 위한 널체크
+						if(cell==null){
+							continue;
+						}else{
+							smpVo.setWeightedAverage(cell.getNumericCellValue());
+						}
+					}
+
+					smpVo.setDivision(division);
+					smpVoList.add(smpVo);
+				}
+			}
+		}
+		smpRepository.saveAll(smpVoList);
+	}
 	
 	public Map<String, Object> findIndicators(){
 		
@@ -110,13 +170,28 @@ public class RecService {
 		
 		return returnData;
 	}
-	
+
+	private XSSFSheet getXlsxSheet(MultipartFile file){
+
+		XSSFSheet sheet = null;
+		try{
+			XSSFWorkbook workbook=new XSSFWorkbook(file.getInputStream());
+			sheet=workbook.getSheetAt(0);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return sheet;
+	}
 	
 	private Sheet getSheet(MultipartFile file){
 		Sheet workSheet = null;
 		try {
+
+			System.out.println("확인중 ----");
+			System.out.println(file.getOriginalFilename().toString());
 			Workbook workbook = new HSSFWorkbook(file.getInputStream());
 			workSheet = workbook.getSheetAt(0);
+
 		}catch (Exception e){
 			e.printStackTrace();
 		}

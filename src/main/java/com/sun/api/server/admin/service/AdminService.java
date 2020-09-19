@@ -44,7 +44,7 @@ public class AdminService {
     	Files.createDirectories(directory);
         
     	// 파일명을 바르게 수정한다.
-    	String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+    	String fileName = StringUtils.cleanPath(file.getOriginalFilename().replaceAll("!\"#[$]%&\\(\\)\\{\\}@`[*]:[+];-.<>,\\^~|'\\[\\]", ""));
 
     	// 파일명에 '..' 문자가 들어 있다면 오류를 발생하고 아니라면 진행(해킹및 오류방지)
     	Assert.state(!fileName.contains(".."), "Name of file cannot contain '..'");

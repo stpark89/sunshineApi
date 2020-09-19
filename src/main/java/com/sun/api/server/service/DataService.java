@@ -1,5 +1,7 @@
 package com.sun.api.server.service;
 
+import com.sun.api.server.rec.repository.RecRepository;
+import com.sun.api.server.rec.repository.SmpRepository;
 import com.sun.api.server.vo.RecVo;
 import com.sun.api.server.vo.SmpVo;
 import lombok.extern.java.Log;
@@ -10,6 +12,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +37,29 @@ public class DataService {
 	// Rec Data File - 육상
 	private static ClassPathResource recXls = new ClassPathResource("data/rec.xls");
 
+	@Autowired
+	private RecRepository recRepository;
+
+	@Autowired
+	private SmpRepository smpRepository;
+
+	public Map<String, Object> selectSmpDbData(){
+		log.info("DataService-selectSmpData ");
+
+		log.info("DataService-selectSmpData ");
+		Map<String, Object> returnData = new HashMap<>();
+
+
+		returnData.put("smp", smpRepository.findBySearchSmpData());
+
+		returnData.put("smpJeju", smpRepository.findBySearchJejuSmpData());
+
+		returnData.put("rec", recRepository.findBySearchRecData());
+
+		returnData.put("recJeju", recRepository.findBySearchJejuRecdData());
+
+		return returnData;
+	}
 
 	/**
 	 * Resource 내부에 있는 Smp 데이터 조회
