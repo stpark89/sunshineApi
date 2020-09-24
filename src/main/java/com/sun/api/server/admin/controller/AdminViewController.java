@@ -202,4 +202,22 @@ public class AdminViewController {
         return "packageProductWriteView";
     }
 
+    /**
+     * 발전소 구축사업. 내부지 직접하기
+     */
+    @RequestMapping(value="/plantConstructionList")
+    public String plantConstructionList(){
+        log.info("/plantConstructionList");
+        return "plantConstructionList";
+    }
+
+    @RequestMapping(value="/detailPlantConstruction/{id}")
+    public String detailPlantConstruction(@PathVariable String id, Model model){
+        log.info("inQuirePlantDetailView  View ---");
+        log.info(id);
+        model.addAttribute("plantId", id);
+        return "detailPlantConstructionView";
+    }
+
+
 }
